@@ -1,0 +1,279 @@
+<mxfile host="Electron" modified="2026-05-09T05:28:12.570Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.4.8 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="6WKvYaHJ15yS5CpRfPPI" version="24.4.8" type="device" pages="2">
+  <diagram name="ページ1" id="s0pubZsY7hrpNY8Eribv">
+    <mxGraphModel dx="1106" dy="2043" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--22" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="80" y="-160" width="380" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--1" value="MainActivity" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="80" y="40" width="360" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--3" value="NavHost" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="120" y="120" width="280" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--4" value="TopScreen" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="140" y="160" width="240" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--5" value="Scaffold" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="160" y="200" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--6" value="Header" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="170" y="230" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--7" value="Content" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="170" y="300" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--8" value="MainApp" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="520" y="40" width="360" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--9" value="WindowGroup" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="540" y="80" width="320" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--10" value="NavigationStack" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="560" y="120" width="280" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--11" value="TopScreen" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="580" y="160" width="240" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--15" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;Android&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="230" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--16" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;iOS&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="670" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--17" value=".toolbar" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="600" y="190" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--13" value="Header" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="610" y="215" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--14" value="Content" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="610" y="300" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--18" value="システムコンポーネント" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="280" y="-145" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--20" value="カスタムコンポーネント" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="100" y="-145" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4hs2ua6Y7gd-PIwWZNr--21" value="CMPコンポーネント" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="100" y="-97.5" width="160" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="_Yrec_tFKTqcWb8AV0p3" name="toSwiftUI">
+    <mxGraphModel dx="2092" dy="935" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-1" value="UIViewControllerRepresentable" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="160" y="120" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-2" value="ComposeUIViewController" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="120" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-3" value="オリジナル Composable 関数" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="-520" y="120" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-4" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-300" y="190" as="sourcePoint" />
+            <mxPoint x="-210" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-5" value="ComposeUIViewController&amp;nbsp;&lt;div&gt;に変換&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="CvCTKSFGbOLTkBzBqtR6-4">
+          <mxGeometry x="-0.3333" y="-3" relative="1" as="geometry">
+            <mxPoint x="10" y="-33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-7" value="SwiftUI の View" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="480" y="80" width="300" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-8" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="40" y="179.5" as="sourcePoint" />
+            <mxPoint x="130" y="179.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-9" value="UIViewControllerRepresentable&amp;nbsp;&lt;div&gt;に変換&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="CvCTKSFGbOLTkBzBqtR6-8">
+          <mxGeometry x="-0.3333" y="-3" relative="1" as="geometry">
+            <mxPoint x="10" y="-33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-13" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="179.5" as="sourcePoint" />
+            <mxPoint x="450" y="179.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-14" value="SwiftUI として表示" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="CvCTKSFGbOLTkBzBqtR6-13">
+          <mxGeometry x="-0.3333" y="-3" relative="1" as="geometry">
+            <mxPoint x="10" y="-33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-15" value="UIViewControllerRepresentable" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;opacity=50;" vertex="1" parent="1">
+          <mxGeometry x="540" y="130" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-18" value="Kotlin のコンポーザブル関数を SwiftUI で表示" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="-520" y="40" width="440" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-20" value="Kotlin のコンポーザブル関数のサイズは SwiftUI に伝わらない" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="-520" y="430" width="570" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-21" value="オリジナル Composable 関数&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Modifier.&lt;span style=&quot;background-color: initial;&quot;&gt;fillMaxSize()&lt;/span&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;or&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp;Modifier.height(64.dp)&lt;/b&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="-520" y="480" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-22" value="ComposeUIViewController" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="480" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-23" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-305" y="540" as="sourcePoint" />
+            <mxPoint x="-215" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-24" value="ComposeUIViewController&amp;nbsp;&lt;div&gt;に変換&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="CvCTKSFGbOLTkBzBqtR6-23">
+          <mxGeometry x="-0.3333" y="-3" relative="1" as="geometry">
+            <mxPoint x="10" y="-33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-25" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;サイズ情報&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;が欠落する&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-185" y="540" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-26" value="UIViewControllerRepresentable" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="160" y="480" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-27" value="SwiftUI の View" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="480" y="440" width="280" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-28" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="40" y="550.5" as="sourcePoint" />
+            <mxPoint x="130" y="550.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-29" value="UIViewControllerRepresentable&amp;nbsp;&lt;div&gt;に変換&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="CvCTKSFGbOLTkBzBqtR6-28">
+          <mxGeometry x="-0.3333" y="-3" relative="1" as="geometry">
+            <mxPoint x="10" y="-33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-30" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="520.5" as="sourcePoint" />
+            <mxPoint x="450" y="520.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-31" value="SwiftUI として表示" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="CvCTKSFGbOLTkBzBqtR6-30">
+          <mxGeometry x="-0.3333" y="-3" relative="1" as="geometry">
+            <mxPoint x="10" y="-33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-32" value="UIViewControllerRepresentable" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;opacity=50;" vertex="1" parent="1">
+          <mxGeometry x="480" y="480" width="280" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-33" value="UIViewControllerRepresentable は&lt;div&gt;デフォルトで「与えられた空間を全部使う」挙動&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="520" y="535" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-36" value="オリジナル Composable 関数&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="-520" y="960" width="180" height="121" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-37" value="ComposeUIViewController" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="960" width="180" height="120.5" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-38" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-310" y="1019.5" as="sourcePoint" />
+            <mxPoint x="-220" y="1019.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-39" value="ComposeUIViewController&amp;nbsp;&lt;div&gt;に変換&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="CvCTKSFGbOLTkBzBqtR6-38">
+          <mxGeometry x="-0.3333" y="-3" relative="1" as="geometry">
+            <mxPoint x="10" y="-33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-41" value="UIViewControllerRepresentable" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="160" y="960.5" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-42" value="SwiftUI の View" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="480" y="921" width="280" height="179" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-43" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="40" y="1025" as="sourcePoint" />
+            <mxPoint x="130" y="1025" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-44" value="UIViewControllerRepresentable&amp;nbsp;&lt;div&gt;に変換&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="CvCTKSFGbOLTkBzBqtR6-43">
+          <mxGeometry x="-0.3333" y="-3" relative="1" as="geometry">
+            <mxPoint x="10" y="-33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-45" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="1019.5" as="sourcePoint" />
+            <mxPoint x="450" y="1019.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-46" value="SwiftUI として表示" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="CvCTKSFGbOLTkBzBqtR6-45">
+          <mxGeometry x="-0.3333" y="-3" relative="1" as="geometry">
+            <mxPoint x="10" y="-33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-47" value="UIViewControllerRepresentable" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;opacity=50;" vertex="1" parent="1">
+          <mxGeometry x="480" y="961" width="280" height="139" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-49" value="inner Composable 関数&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;&lt;b&gt;Modifier.height(64.dp)&lt;/b&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="-495" y="994.5" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-53" value="外枠のサイズ情報は欠落するが&lt;div&gt;内包コンポーネントの&lt;/div&gt;&lt;div&gt;サイズは残る&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-185" y="1019.5" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-54" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="480" y="994.5" width="280" height="55.5" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-55" value="内包 Composable 関数のサイズを&lt;div&gt;キープする&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=15;" vertex="1" parent="1">
+          <mxGeometry x="220" y="1110.5" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-56" value="" style="endArrow=none;html=1;rounded=0;exitX=0.975;exitY=0.47;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.071;entryY=0.64;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="CvCTKSFGbOLTkBzBqtR6-55" target="CvCTKSFGbOLTkBzBqtR6-54">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="1160.5" as="sourcePoint" />
+            <mxPoint x="570" y="1110.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-57" value="Composable 関数が Modifier.fillMaxSize() の場合は&lt;span style=&quot;background-color: initial;&quot;&gt;UIViewControllerRepresentable の&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;デフォルト挙動と一致する&lt;/span&gt;&amp;nbsp;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=15;" vertex="1" parent="1">
+          <mxGeometry x="220" y="610" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-58" value="" style="endArrow=none;html=1;rounded=0;exitX=0.975;exitY=0.47;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="CvCTKSFGbOLTkBzBqtR6-57">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="680" as="sourcePoint" />
+            <mxPoint x="490" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-59" value="内包 Composable 関数のサイズは keep" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="-520" y="900" width="570" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-60" value="SwiftUI の View" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="480" y="680" width="280" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-61" value="UIViewControllerRepresentable" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;opacity=50;" vertex="1" parent="1">
+          <mxGeometry x="480" y="720" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-64" value="コンポーザブル関数の SwiftUI 化における制限がある。。。" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="-520" y="320" width="520" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-66" value="オリジナル Composable 関数の Modifier.height(64.dp) を表示するには UIViewControllerRepresentableに&amp;nbsp; &lt;b&gt;.frame(height: 64) &lt;/b&gt;を付与する" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=15;" vertex="1" parent="1">
+          <mxGeometry x="220" y="800" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="CvCTKSFGbOLTkBzBqtR6-67" value="" style="endArrow=none;html=1;rounded=0;exitX=0.975;exitY=0.47;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="CvCTKSFGbOLTkBzBqtR6-66" target="CvCTKSFGbOLTkBzBqtR6-61">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="870" as="sourcePoint" />
+            <mxPoint x="490" y="790" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

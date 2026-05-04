@@ -1,4 +1,4 @@
-package dev.seabat.cmp.pdfviewr
+package dev.seabat.cmp.pdfviewer
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,13 +13,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            App()
+            NavigationApp()
         }
     }
 }
 
 @Preview
 @Composable
-fun AppAndroidPreview() {
-    App()
+fun NavigationAppAndroidPreview() {
+    NavigationApp()
 }

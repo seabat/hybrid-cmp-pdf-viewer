@@ -1,4 +1,4 @@
-package dev.seabat.cmp.pdfviewr
+package dev.seabat.cmp.pdfviewer
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

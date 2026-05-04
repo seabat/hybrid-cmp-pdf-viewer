@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -29,6 +28,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.navigation.compose)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -47,7 +47,7 @@ kotlin {
 }
 
 android {
-    namespace = "dev.seabat.cmp.pdfviewr"
+    namespace = "dev.seabat.cmp.pdfviewer"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
