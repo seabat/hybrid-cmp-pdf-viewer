@@ -1,13 +1,15 @@
-import UIKit
 import SwiftUI
 import ComposeApp
 
-/// Kotlin Composable の ViewerContent を UIViewControllerRepresentable でラップするビュー
-private struct ViewerContentComposeView: UIViewControllerRepresentable {
+/// Kotlin Composable の ViewerScaffold を UIViewControllerRepresentable でラップするビュー
+private struct ViewerScaffoldComposeView: UIViewControllerRepresentable {
     var fileName: String
+    var onNavigateBack: () -> Void
 
     func makeUIViewController(context: Context) -> UIViewController {
-        ViewerContentViewControllerKt.ViewerContentViewController(fileName: fileName)
+        ViewerScaffoldViewControllerKt.ViewerScaffoldViewController(fileName: fileName) {
+            onNavigateBack()
+        }
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
@@ -17,11 +19,11 @@ private struct ViewerContentComposeView: UIViewControllerRepresentable {
 /// View プロトコルを実装した SwiftUI コンポーネント
 struct ViewerScreen: View {
     var fileName: String
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        ViewerContentComposeView(fileName: fileName)
+        ViewerScaffoldComposeView(fileName: fileName, onNavigateBack: { dismiss() })
             .ignoresSafeArea()
-            .navigationTitle(fileName)
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarHidden(true)
     }
 }

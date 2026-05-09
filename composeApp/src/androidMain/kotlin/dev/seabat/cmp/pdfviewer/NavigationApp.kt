@@ -30,7 +30,12 @@ fun NavigationApp() {
             // ビューアページ
             composable("viewer/{fileName}") { backStackEntry ->
                 val fileName = backStackEntry.arguments?.getString("fileName") ?: ""
-                ViewerScreen(fileName = fileName)
+                ViewerScreen(
+                    fileName = fileName,
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    }
+                )
             }
         }
     }
