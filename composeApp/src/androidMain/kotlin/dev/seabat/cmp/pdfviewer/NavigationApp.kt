@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.seabat.cmp.pdfviewer.screen.TopScreen
-import dev.seabat.cmp.pdfviewer.screen.ViewerScreen
+import dev.seabat.cmp.pdfviewer.screen.top.TopScreen
+import dev.seabat.cmp.pdfviewer.screen.viewer.ViewerScreen
 
 /**
  * Android アプリのルートコンポーザブル

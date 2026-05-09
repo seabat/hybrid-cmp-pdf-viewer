@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("co.touchlab.skie") version "0.10.11"
 }
 
 kotlin {
@@ -21,6 +22,9 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+
+            // Accessible by the iOS app
+            export(project(":shared:domain"))
         }
     }
     
@@ -29,8 +33,16 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.navigation.compose)
+
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
+            // Accessible by the native app
+            api(project(":shared:domain"))
+
+            // Accessible only in the KMP part
+            implementation(project(":shared:data"))
+
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
@@ -40,6 +52,11 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            implementation(libs.koin.androidx.compose)
+            implementation(libs.koin.test)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

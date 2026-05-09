@@ -12,7 +12,7 @@ enum Destination: Hashable {
 
 /// アプリのナビゲーションを管理するビュー
 /// NavigationStack 内で TopScreen / ViewerScreen 間の画面遷移を管理する
-struct ContentView: View {
+struct NavigationView: View {
     @State private var path = [Destination]()
 
     var body: some View {
