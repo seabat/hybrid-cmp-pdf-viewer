@@ -15,3 +15,4 @@ iOS は SwiftUI ナビゲーション + ComposeUIViewController、Android は Je
 @.claude/rules/screen-addition.md
 @.claude/rules/usecase-addition.md
 @.claude/rules/android-buildconfig.md
+@.claude/rules/dialog-addition.md

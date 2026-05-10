@@ -8,8 +8,14 @@ import dev.seabat.cmp.pdfviewer.screen.information.InformationScaffold
  * Kotlin Composable の InformationScaffold を ComposeUIViewController でラップして公開する
  *
  * @param onNavigateBack 戻るボタンをタップしたときに呼ばれるコールバック
+ * @param onShowAlert Version 行タップ時に Swift 側のダイアログを表示するコールバック
  */
-fun InformationScaffoldViewController(onNavigateBack: () -> Unit) =
-    ComposeUIViewController {
-        InformationScaffold(onNavigateBack = onNavigateBack)
-    }
+fun InformationScaffoldViewController(
+    onNavigateBack: () -> Unit,
+    onShowAlert: () -> Unit
+) = ComposeUIViewController {
+    InformationScaffold(
+        onNavigateBack = onNavigateBack,
+        onShowVersionAlert = onShowAlert
+    )
+}

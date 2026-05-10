@@ -9,7 +9,10 @@ import dev.seabat.cmp.pdfviewer.theme.AppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InformationScaffold(onNavigateBack: () -> Unit) {
+fun InformationScaffold(
+    onNavigateBack: () -> Unit,
+    onShowVersionAlert: () -> Unit = {}
+) {
     Scaffold(
         containerColor = AppColors.contentContainer.toComposeColor(),  // 端末最下部のナビゲーションバーの背景
         topBar = {
@@ -17,7 +20,8 @@ fun InformationScaffold(onNavigateBack: () -> Unit) {
         }
     ) { padding ->
         InformationContent(
-            modifier = Modifier.padding(padding)
+            modifier = Modifier.padding(padding),
+            onVersionTapped = onShowVersionAlert
         )
     }
 }

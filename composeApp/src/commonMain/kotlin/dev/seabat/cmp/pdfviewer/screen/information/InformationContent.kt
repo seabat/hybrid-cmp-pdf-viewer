@@ -1,6 +1,7 @@
 package dev.seabat.cmp.pdfviewer.screen.information
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +19,8 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun InformationContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onVersionTapped: () -> Unit = {}
 ) {
     val viewModel: ViewerViewModel = koinViewModel()
     val phrases by viewModel.phrases.collectAsStateWithLifecycle()
@@ -34,7 +36,11 @@ fun InformationContent(
     ) {
         HorizontalDivider()
         phrases.forEach { phrase ->
-            Text(phrase)
+            if (phrase.contains("Version:")) {
+                Text(phrase, modifier = Modifier.clickable { onVersionTapped() })
+            } else {
+                Text(phrase)
+            }
             HorizontalDivider()
         }
     }
