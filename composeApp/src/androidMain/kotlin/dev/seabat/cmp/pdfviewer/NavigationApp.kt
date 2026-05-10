@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dev.seabat.cmp.pdfviewer.screen.information.InformationScreen
 import dev.seabat.cmp.pdfviewer.screen.top.TopScreen
 import dev.seabat.cmp.pdfviewer.screen.viewer.ViewerScreen
 
@@ -23,6 +24,18 @@ fun NavigationApp() {
                 TopScreen(
                     onNavigateToViewer = { fileName ->
                         navController.navigate("viewer/$fileName")
+                    },
+                    onNavigateToInformation = {
+                        navController.navigate("information")
+                    }
+                )
+            }
+
+            // インフォメーションページ
+            composable("information") {
+                InformationScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
                     }
                 )
             }

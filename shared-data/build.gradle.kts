@@ -55,11 +55,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        buildConfig = true
+    }
     defaultConfig {
         minSdk =
             libs.versions.android.minSdk
                 .get()
                 .toInt()
+        buildConfigField("String", "VERSION_NAME", "\"1.0\"")
     }
     buildTypes {
         release {

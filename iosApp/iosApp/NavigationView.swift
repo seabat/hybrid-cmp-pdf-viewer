@@ -6,6 +6,7 @@ import SwiftUI
 /// NavigationStack で管理する画面遷移先
 enum Destination: Hashable {
     case viewer(fileName: String)
+    case information
 }
 
 // MARK: - ナビゲーションビュー
@@ -22,6 +23,8 @@ struct NavigationView: View {
                     switch destination {
                     case .viewer(let fileName):
                         ViewerScreen(fileName: fileName)
+                    case .information:
+                        InformationScreen()
                     }
                 }
         }

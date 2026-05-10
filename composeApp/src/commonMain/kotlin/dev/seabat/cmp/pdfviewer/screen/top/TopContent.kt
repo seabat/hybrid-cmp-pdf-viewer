@@ -18,8 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.seabat.cmp.pdfviewer.entity.PdfFile
-import dev.seabat.cmp.pdfviewer.entity.samplePdfFiles
+import dev.seabat.cmp.pdfviewer.shareddomain.entity.PdfFile
+import dev.seabat.cmp.pdfviewer.shareddomain.entity.samplePdfFiles
 import dev.seabat.cmp.pdfviewer.theme.AppColors
 
 /**

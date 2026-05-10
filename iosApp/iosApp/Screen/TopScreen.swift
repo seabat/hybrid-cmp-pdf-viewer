@@ -4,9 +4,12 @@ import ComposeApp
 
 /// Kotlin Composable の TopHeader を UIViewControllerRepresentable でラップするビュー
 private struct TopHeaderComposeView: UIViewControllerRepresentable {
+    var onNavigateToInformation: () -> Void
 
     func makeUIViewController(context: Context) -> UIViewController {
-        TopHeaderViewControllerKt.TopHeaderViewController()
+        TopHeaderViewControllerKt.TopHeaderViewController {
+            onNavigateToInformation()
+        }
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
@@ -32,7 +35,9 @@ struct TopScreen: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            TopHeaderComposeView()
+            TopHeaderComposeView(onNavigateToInformation: {
+                path.append(.information)
+            })
                 .frame(height: 64)
                 .background(
                     // TopHeader の TopAppBar と同じ色をステータスバー領域へ拡張

@@ -1,0 +1,167 @@
+# 画面追加ルール
+
+画面構成には **方法A** と **方法B** の2種類がある。
+参考図: `docs/CMP_In_Native化案-UI共通化.png`
+
+---
+
+## 方法A：Scaffold を androidMain に置く
+
+**採用例:** TopScreen
+
+iOS 側で Header と Content を個別の ComposeView として SwiftUI の VStack に配置する。
+SafeArea の細かい制御が必要な画面に向いている。
+
+### 作成するファイル
+
+**commonMain** — Header と Content のみ（Scaffold なし）
+
+```
+screen/{screenName}/
+├── {ScreenName}Content.kt    # コンテンツ（TopContent.kt を参照）
+└── {ScreenName}Header.kt     # TopAppBar（TopHeader.kt を参照）
+```
+
+**androidMain** — Scaffold を持つ Screen
+
+```
+screen/{screenName}/
+└── {ScreenName}Screen.kt     # Scaffold + Header + Content（TopScreen.kt を参照）
+```
+
+**iosMain** — Header・Content それぞれに ViewController
+
+```
+viewcontroller/{screenName}/
+├── {ScreenName}HeaderViewController.kt   # TopHeaderViewController.kt を参照
+└── {ScreenName}ContentViewController.kt  # TopContentViewController.kt を参照
+```
+
+**Swift** — VStack で Header と Content を個別配置
+
+```
+iosApp/Screen/
+└── {ScreenName}Screen.swift    # TopScreen.swift を参照
+```
+
+- SwiftUI の `VStack(spacing: 0)` で Header + Content を並べる
+- Header は `.frame(height: 64)` + `.background(...ignoresSafeArea(edges: .top))`
+- Content は `.background(...ignoresSafeArea(edges: .bottom))`
+- `.navigationBarHidden(true)` は不要（SwiftUI が SafeArea を管理）
+
+---
+
+## 方法B：Scaffold を commonMain に置く
+
+**採用例:** ViewerScreen、InformationScreen
+
+Scaffold ごと CMP コンポーネントとして共有する。iOS は Scaffold 全体を1つの ComposeView でラップする。
+
+### 作成するファイル
+
+**commonMain** — Header・Content・Scaffold をすべて共有
+
+```
+screen/{screenName}/
+├── {ScreenName}Content.kt    # コンテンツ（ViewerContent.kt を参照）
+├── {ScreenName}Header.kt     # TopAppBar + 戻るボタン（ViewerHeader.kt を参照）
+└── {ScreenName}Scaffold.kt   # Scaffold で Header + Content をラップ（ViewerScaffold.kt を参照）
+```
+
+- **Header**: `onNavigateBack: () -> Unit` を受け取り、戻るボタンを `navigationIcon` に配置。
+- **Scaffold**: `containerColor = AppColors.contentContainer.toComposeColor()` を設定。
+
+**androidMain** — Scaffold を呼ぶだけの薄いラッパー
+
+```
+screen/{screenName}/
+└── {ScreenName}Screen.kt     # ViewerScreen.kt を参照
+```
+
+**iosMain** — Scaffold 全体を1つの ViewController でラップ
+
+```
+viewcontroller/{screenName}/
+└── {ScreenName}ScaffoldViewController.kt   # ViewerScaffoldViewController.kt を参照
+```
+
+**Swift** — Scaffold 全体を1つの ComposeView でラップ
+
+```
+iosApp/Screen/
+└── {ScreenName}Screen.swift    # ViewerScreen.swift を参照
+```
+
+- `@Environment(\.dismiss)` で戻る処理を実装。
+- `.ignoresSafeArea()` と `.navigationBarHidden(true)` を付ける。
+
+---
+
+## ナビゲーションの更新
+
+### Android: NavigationApp.kt
+
+```kotlin
+// ルートを追加
+composable("{screenName}") {
+    {ScreenName}Screen(onNavigateBack = { navController.popBackStack() })
+}
+
+// 遷移元に onNavigateTo{ScreenName} を渡す
+onNavigateTo{ScreenName} = { navController.navigate("{screenName}") }
+```
+
+### iOS: NavigationView.swift
+
+```swift
+// Destination enum にケースを追加
+enum Destination: Hashable {
+    case {screenName}
+}
+
+// navigationDestination に分岐を追加
+case .{screenName}:
+    {ScreenName}Screen()
+```
+
+---
+
+## 遷移元ヘッダーの更新
+
+TopHeader など遷移元の Header に遷移トリガーを追加する場合：
+
+**Kotlin (commonMain):**
+- `onNavigateTo{ScreenName}: () -> Unit` パラメータを追加
+- `TopAppBar` の `actions` に `IconButton` を配置
+
+**iosMain の ViewController:**
+- 同パラメータを追加して Composable へ渡す
+
+**Swift の ComposeView ラッパー:**
+- `onNavigateTo{ScreenName}: () -> Void` プロパティを追加
+- `makeUIViewController` 内でコールバックを渡す
+
+**Swift の画面（方法A）:**
+- コールバック内で `path.append(.{screenName})` を呼ぶ
+
+---
+
+## 命名・配置のルール
+
+### 方法A
+
+| レイヤー | パッケージ / ディレクトリ | クラス名のパターン |
+|---------|------------------------|-----------------|
+| commonMain | `screen/{screenName}/` | `{ScreenName}Content`, `{ScreenName}Header` |
+| androidMain | `screen/{screenName}/` | `{ScreenName}Screen`（Scaffold を持つ） |
+| iosMain | `viewcontroller/{screenName}/` | `{ScreenName}HeaderViewController`, `{ScreenName}ContentViewController` |
+| Swift | `iosApp/Screen/` | `{ScreenName}Screen`, `{ScreenName}HeaderComposeView`, `{ScreenName}ContentComposeView` |
+
+### 方法B
+
+| レイヤー | パッケージ / ディレクトリ | クラス名のパターン |
+|---------|------------------------|-----------------|
+| commonMain | `screen/{screenName}/` | `{ScreenName}Content`, `{ScreenName}Header`, `{ScreenName}Scaffold` |
+| androidMain | `screen/{screenName}/` | `{ScreenName}Screen`（薄いラッパー） |
+| iosMain | `viewcontroller/{screenName}/` | `{ScreenName}ScaffoldViewController` |
+| Swift | `iosApp/Screen/` | `{ScreenName}Screen`, `{ScreenName}ScaffoldComposeView` |
