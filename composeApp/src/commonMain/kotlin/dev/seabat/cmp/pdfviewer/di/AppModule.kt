@@ -1,5 +1,6 @@
 package dev.seabat.cmp.pdfviewer.di
 
+import dev.seabat.cmp.pdfviewer.shareddata.di.dataSourceModule
 import dev.seabat.cmp.pdfviewer.shareddata.di.repositoryModule
 import dev.seabat.cmp.pdfviewer.shareddomain.di.useCaseModule
 import org.koin.core.context.startKoin
@@ -11,7 +12,8 @@ fun initAndroidKoin(appDeclaration: KoinAppDeclaration) = startKoin {
     modules(
         useCaseModule,
         viewModelModule,
-        repositoryModule
+        repositoryModule,
+        dataSourceModule
     )
 }
 
@@ -20,7 +22,8 @@ fun initComposePreviewKoin() = startKoin {
     modules(
         viewModelModule,
         useCaseModule,
-        repositoryModule
+        repositoryModule,
+        dataSourceModule
     )
 }
 
@@ -33,7 +36,7 @@ fun initIosKoin() {
             useCaseModule,
             viewModelModule,
             repositoryModule,
-            platformModule
+            dataSourceModule
         )
     }
 }

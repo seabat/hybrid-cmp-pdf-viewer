@@ -8,6 +8,9 @@ import org.koin.dsl.module
 
 // inject を実行するクラスを定義する
 val repositoryModule = module {
-    single<PlatformInfoDataSourceContract> { PlatformInfoDataSource() }
     single<PlatformRepositoryContract> { PlatformRepository(get()) }
+}
+
+val dataSourceModule = module {
+    single<PlatformInfoDataSourceContract> { PlatformInfoDataSource() }
 }
