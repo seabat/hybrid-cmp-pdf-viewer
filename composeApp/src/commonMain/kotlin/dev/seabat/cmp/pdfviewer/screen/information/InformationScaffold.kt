@@ -1,4 +1,4 @@
-package dev.seabat.cmp.pdfviewer.screen.top
+package dev.seabat.cmp.pdfviewer.screen.information
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -7,21 +7,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.seabat.cmp.pdfviewer.theme.AppColors
 
-/**
- * Android 用のトップページ
- * Scaffold + TopAppBar で [TopContent] をラップする
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopScreen(onNavigateToViewer: (String) -> Unit, onNavigateToInformation: () -> Unit) {
+fun InformationScaffold(onNavigateBack: () -> Unit) {
     Scaffold(
         containerColor = AppColors.contentContainer.toComposeColor(),  // 端末最下部のナビゲーションバーの背景
         topBar = {
-            TopHeader(onNavigateToInformation = onNavigateToInformation)
+            InformationHeader(onNavigateBack = onNavigateBack)
         }
     ) { padding ->
-        TopContent(
-            onNavigateToViewer = onNavigateToViewer,
+        InformationContent(
             modifier = Modifier.padding(padding)
         )
     }

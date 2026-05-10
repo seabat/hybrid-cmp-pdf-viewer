@@ -1,7 +1,7 @@
-package dev.seabat.cmp.pdfviewer.screen.top
+package dev.seabat.cmp.pdfviewer.screen.information
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -13,15 +13,15 @@ import dev.seabat.cmp.pdfviewer.theme.AppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopHeader(onNavigateToInformation: () -> Unit) {
+fun InformationHeader(onNavigateBack: () -> Unit) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = AppColors.headerContainer.toComposeColor()),
-        title = { Text("PDF ビューア") },
-        actions = {
-            IconButton(onClick = onNavigateToInformation) {
+        title = { Text("インフォメーション") },
+        navigationIcon = {
+            IconButton(onClick = onNavigateBack) {
                 Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = "インフォメーション"
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "戻る"
                 )
             }
         }
