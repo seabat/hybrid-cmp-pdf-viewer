@@ -6,5 +6,5 @@ import org.koin.dsl.module
 
 // inject を実行するクラスを定義する
 val useCaseModule = module {
-    single<CreatePhrasesUseCaseContract> { CreatePhrasesUseCase(get()) }
+    single<CreatePhrasesUseCaseContract> { CreatePhrasesUseCase(get(), get()) }
 }

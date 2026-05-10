@@ -81,11 +81,37 @@ shared-data/src/iosMain/.../shareddata/datasource/
 
 shared-data/src/commonTest/.../shareddata/datasource/
 └── Fake{DataSourceName}DataSource.kt       # テスト用 Fake
+
+shared-domain/src/commonTest/.../shareddomain/repository/
+└── Fake{RepositoryName}Repository.kt       # ユースケーステスト用 Fake
 ```
 
 DI 更新:
 - `DomainModule.kt` → `useCaseModule` にユースケースを追加
 - `DataModule.kt` → `repositoryModule` にリポジトリを追加、`dataSourceModule` にデータソースを追加
+
+---
+
+### シナリオ4：既存ユースケースに新しいリポジトリ依存を追加
+
+新規ユースケースではなく、既存ユースケースのコンストラクタに新しいリポジトリ依存を追加するケース。
+
+追加するリポジトリ・データソースのファイルはシナリオ2またはシナリオ3と同じ。  
+加えて以下を **更新** する：
+
+```
+# 既存のユースケース実装を更新
+shared-domain/src/commonMain/.../shareddomain/usecase/
+└── {ExistingUseCaseName}UseCase.kt   # コンストラクタに新しい依存を追加
+
+# 既存のユースケーステストを更新
+shared-domain/src/commonTest/.../shareddomain/usecase/
+└── {ExistingUseCaseName}UseCaseTest.kt   # 新しい Fake を引数に追加、アサーションを更新
+```
+
+DI 更新:
+- `DomainModule.kt` → 既存の `single<...> { ExistingUseCase(get()) }` を `single<...> { ExistingUseCase(get(), get()) }` のように引数を追加
+- `DataModule.kt` → `repositoryModule` / `dataSourceModule` に新規コンポーネントを追加
 
 ---
 
@@ -157,8 +183,17 @@ interface {UseCaseName}UseCaseContract {
 ### ユースケース 実装
 参照: `shared-domain/.../usecase/CreatePhrasesUseCase.kt`
 ```kotlin
+// リポジトリが1つの場合
 class {UseCaseName}UseCase(private val repository: {RepositoryName}RepositoryContract) :
     {UseCaseName}UseCaseContract {
+    override suspend fun invoke(): {ReturnType} { ... }
+}
+
+// リポジトリが複数の場合（コンストラクタに必要な数だけ追加）
+class {UseCaseName}UseCase(
+    private val repository: {RepositoryName}RepositoryContract,
+    private val otherRepository: {OtherRepositoryName}RepositoryContract
+) : {UseCaseName}UseCaseContract {
     override suspend fun invoke(): {ReturnType} { ... }
 }
 ```

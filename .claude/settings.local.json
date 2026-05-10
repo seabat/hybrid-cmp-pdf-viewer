@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "mcp__context7__resolve-library-id",
-      "mcp__context7__query-docs"
+      "mcp__context7__query-docs",
+      "Bash(./gradlew :shared-data:compileDebugKotlinAndroid :shared-domain:compileKotlinMetadata)",
+      "Bash(./gradlew projects *)",
+      "Bash(./gradlew :shared:data:compileDebugKotlinAndroid :shared:domain:compileKotlinMetadata)",
+      "Bash(./gradlew :shared:data:testDebugUnitTest :shared:domain:testDebugUnitTest)"
     ]
   }
 }
