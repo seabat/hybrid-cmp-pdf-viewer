@@ -25,14 +25,16 @@ struct InformationScreen: View {
     var body: some View {
         InformationScaffoldComposeView(
             onNavigateBack: { dismiss() },
-            onShowAlert: { showAlert = true }
+            onShowAlert: {
+                showAlert = true
+            }
         )
         .ignoresSafeArea()
         .navigationBarHidden(true)
-        .alert("確認", isPresented: $showAlert) {
-            Button("OK") { showAlert = false }
+        .alert(StringResourcesKt.getString(key: .informationAlertTitle), isPresented: $showAlert) {
+            Button(StringResourcesKt.getString(key: .alertOk)) { showAlert = false }
         } message: {
-            Text("このアプリは最新です。")
+            Text(StringResourcesKt.getString(key: .informationAlertMessage))
         }
     }
 }
