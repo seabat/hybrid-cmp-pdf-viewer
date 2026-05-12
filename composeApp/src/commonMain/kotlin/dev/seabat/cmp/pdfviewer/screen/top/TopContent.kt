@@ -21,6 +21,10 @@ import androidx.compose.ui.unit.dp
 import dev.seabat.cmp.pdfviewer.shareddomain.entity.PdfFile
 import dev.seabat.cmp.pdfviewer.shareddomain.entity.samplePdfFiles
 import dev.seabat.cmp.pdfviewer.theme.AppColors
+import hypbridcmppdfviewer.composeapp.generated.resources.Res
+import hypbridcmppdfviewer.composeapp.generated.resources.top_created_at
+import hypbridcmppdfviewer.composeapp.generated.resources.top_size
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * トップページのコンテンツ (iOS と Android で共通)
@@ -60,11 +64,11 @@ private fun PdfFileItem(file: PdfFile, onClick: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "作成日時: ${file.createdAt}",
+                text = "${stringResource(Res.string.top_created_at)} ${file.createdAt}",
                 style = MaterialTheme.typography.bodySmall
             )
             Text(
-                text = "サイズ: ${file.size}",
+                text = "${stringResource(Res.string.top_size)} ${file.size}",
                 style = MaterialTheme.typography.bodySmall
             )
         }

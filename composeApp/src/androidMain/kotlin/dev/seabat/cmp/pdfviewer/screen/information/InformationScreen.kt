@@ -9,6 +9,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import hypbridcmppdfviewer.composeapp.generated.resources.Res
+import hypbridcmppdfviewer.composeapp.generated.resources.alert_ok
+import hypbridcmppdfviewer.composeapp.generated.resources.information_alert_message
+import hypbridcmppdfviewer.composeapp.generated.resources.information_alert_title
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Android 用のインフォメーションページ
@@ -22,11 +27,11 @@ fun InformationScreen(onNavigateBack: () -> Unit) {
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { showDialog = false },
-            title = { Text("確認") },
+            title = { Text(stringResource(Res.string.information_alert_title)) },
             confirmButton = {
-                TextButton(onClick = { showDialog = false }) { Text("OK") }
+                TextButton(onClick = { showDialog = false }) { Text(stringResource(Res.string.alert_ok)) }
             },
-            text = { Text("このアプリは最新です。") }
+            text = { Text(stringResource(Res.string.information_alert_message)) }
         )
     }
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Top -->
+    <string name="top_header">PDF ビューア</string>
+    <string name="top_created_at">作成日時: </string>
+    <string name="top_size">サイズ: </string>
+
+    <!-- Viewer -->
+
+    <!-- Information -->
+    <string name="information_header">インフォメーション</string>
+    <string name="information_alert_title">確認</string>
+    <string name="information_alert_message">このアプリは最新です。</string>
+
+    <!--  共通  -->
+    <string name="alert_ok">OK</string>
+</resources>

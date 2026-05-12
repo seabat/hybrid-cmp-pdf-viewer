@@ -10,13 +10,17 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import dev.seabat.cmp.pdfviewer.theme.AppColors
+import hypbridcmppdfviewer.composeapp.generated.resources.Res
+import hypbridcmppdfviewer.composeapp.generated.resources.information_header
+import hypbridcmppdfviewer.composeapp.generated.resources.top_header
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InformationHeader(onNavigateBack: () -> Unit) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = AppColors.headerContainer.toComposeColor()),
-        title = { Text("インフォメーション") },
+        title = { Text(stringResource(Res.string.information_header)) },
         navigationIcon = {
             IconButton(onClick = onNavigateBack) {
                 Icon(
