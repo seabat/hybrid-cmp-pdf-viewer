@@ -20,7 +20,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun InformationContent(
     modifier: Modifier = Modifier,
-    onVersionTapped: () -> Unit = {}
+    onVersionTapped: () -> Unit = {},
+    onShowBioAuth: () -> Unit = {}
 ) {
     val viewModel: ViewerViewModel = koinViewModel()
     val phrases by viewModel.phrases.collectAsStateWithLifecycle()
@@ -38,6 +39,8 @@ fun InformationContent(
         phrases.forEach { phrase ->
             if (phrase.contains("Version:")) {
                 Text(phrase, modifier = Modifier.clickable { onVersionTapped() })
+            } else if (phrase.contains("OS:")) {
+                Text(phrase, modifier = Modifier.clickable { onShowBioAuth() })
             } else {
                 Text(phrase)
             }

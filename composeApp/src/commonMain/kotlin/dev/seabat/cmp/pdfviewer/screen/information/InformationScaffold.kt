@@ -11,7 +11,8 @@ import dev.seabat.cmp.pdfviewer.theme.AppColors
 @Composable
 fun InformationScaffold(
     onNavigateBack: () -> Unit,
-    onShowVersionAlert: () -> Unit = {}
+    onShowVersionAlert: () -> Unit = {},
+    onShowBioAuth: () -> Unit = {}
 ) {
     Scaffold(
         containerColor = AppColors.contentContainer.toComposeColor(),  // 端末最下部のナビゲーションバーの背景
@@ -21,7 +22,8 @@ fun InformationScaffold(
     ) { padding ->
         InformationContent(
             modifier = Modifier.padding(padding),
-            onVersionTapped = onShowVersionAlert
+            onVersionTapped = onShowVersionAlert,
+            onShowBioAuth = onShowBioAuth
         )
     }
 }

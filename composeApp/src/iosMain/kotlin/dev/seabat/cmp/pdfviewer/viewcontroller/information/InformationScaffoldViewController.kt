@@ -12,10 +12,12 @@ import dev.seabat.cmp.pdfviewer.screen.information.InformationScaffold
  */
 fun InformationScaffoldViewController(
     onNavigateBack: () -> Unit,
-    onShowAlert: () -> Unit
+    onShowAlert: () -> Unit,
+    onShowBioAuth: () -> Unit
 ) = ComposeUIViewController {
     InformationScaffold(
         onNavigateBack = onNavigateBack,
-        onShowVersionAlert = onShowAlert
+        onShowVersionAlert = onShowAlert,
+        onShowBioAuth = onShowBioAuth
     )
 }

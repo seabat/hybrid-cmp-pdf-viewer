@@ -5,11 +5,13 @@ import ComposeApp
 private struct InformationScaffoldComposeView: UIViewControllerRepresentable {
     var onNavigateBack: () -> Void
     var onShowAlert: () -> Void
+    var onShowBioAuth: () -> Void
 
     func makeUIViewController(context: Context) -> UIViewController {
         InformationScaffoldViewControllerKt.InformationScaffoldViewController(
             onNavigateBack: { onNavigateBack() },
-            onShowAlert: { onShowAlert() }
+            onShowAlert: { onShowAlert() },
+            onShowBioAuth: { onShowBioAuth() }
         )
     }
 
@@ -21,6 +23,7 @@ private struct InformationScaffoldComposeView: UIViewControllerRepresentable {
 struct InformationScreen: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showAlert = false
+    @State private var showBioAuth = false
 
     var body: some View {
         InformationScaffoldComposeView(
