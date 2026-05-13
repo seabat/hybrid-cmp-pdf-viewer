@@ -6,7 +6,8 @@
       "Bash(./gradlew :shared-data:compileDebugKotlinAndroid :shared-domain:compileKotlinMetadata)",
       "Bash(./gradlew projects *)",
       "Bash(./gradlew :shared:data:compileDebugKotlinAndroid :shared:domain:compileKotlinMetadata)",
-      "Bash(./gradlew :shared:data:testDebugUnitTest :shared:domain:testDebugUnitTest)"
+      "Bash(./gradlew :shared:data:testDebugUnitTest :shared:domain:testDebugUnitTest)",
+      "Bash(gh pr *)"
     ]
   }
 }

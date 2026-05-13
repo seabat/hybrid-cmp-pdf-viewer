@@ -11,6 +11,14 @@
     <string name="information_header">インフォメーション</string>
     <string name="information_alert_title">確認</string>
     <string name="information_alert_message">このアプリは最新です。</string>
+    <string name="information_screen_lock_title">スクリーンロック未設定</string>
+    <string name="information_screen_lock_message">生体認証を使用するには、設定からスクリーンロックを設定してください。</string>
+
+    <!-- 生体認証 -->
+    <string name="bio_auth_title">生体認証</string>
+    <string name="bio_auth_subtitle">認証してください</string>
+    <string name="auth_success_title">認証成功</string>
+    <string name="auth_success_message">認証に成功しました</string>
 
     <!--  共通  -->
     <string name="alert_ok">OK</string>

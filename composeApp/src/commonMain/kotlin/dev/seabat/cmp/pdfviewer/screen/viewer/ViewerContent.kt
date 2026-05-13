@@ -2,7 +2,6 @@ package dev.seabat.cmp.pdfviewer.screen.viewer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.HorizontalDivider
@@ -13,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.seabat.cmp.pdfviewer.screen.information.InformationViewModel
 import dev.seabat.cmp.pdfviewer.theme.AppColors
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -25,7 +25,7 @@ fun ViewerContent(
     fileName: String,
     modifier: Modifier = Modifier
 ) {
-    val viewModel: ViewerViewModel = koinViewModel()
+    val viewModel: InformationViewModel = koinViewModel()
     val phrases by viewModel.phrases.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
