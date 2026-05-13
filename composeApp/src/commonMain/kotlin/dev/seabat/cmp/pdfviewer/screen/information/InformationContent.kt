@@ -13,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.seabat.cmp.pdfviewer.screen.viewer.ViewerViewModel
 import dev.seabat.cmp.pdfviewer.theme.AppColors
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -21,13 +20,22 @@ import org.koin.compose.viewmodel.koinViewModel
 fun InformationContent(
     modifier: Modifier = Modifier,
     onVersionTapped: () -> Unit = {},
-    onShowBioAuth: () -> Unit = {}
+    onShowBioAuth: () -> Unit = {},
+    onAuthSuccess: () -> Unit = {}
 ) {
-    val viewModel: ViewerViewModel = koinViewModel()
+    val viewModel: InformationViewModel = koinViewModel()
     val phrases by viewModel.phrases.collectAsStateWithLifecycle()
+    val isAuthSuccess by viewModel.isAuthSuccess.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.createPhrases()
+    }
+
+    LaunchedEffect(isAuthSuccess) {
+        if (isAuthSuccess) {
+            onAuthSuccess()
+            viewModel.resetAuthSuccess()
+        }
     }
 
     Column(

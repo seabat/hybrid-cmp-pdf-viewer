@@ -7,12 +7,14 @@ private struct InformationScaffoldComposeView: UIViewControllerRepresentable {
     var onNavigateBack: () -> Void
     var onShowAlert: () -> Void
     var onShowBioAuth: () -> Void
+    var onAuthSuccess: () -> Void
 
     func makeUIViewController(context: Context) -> UIViewController {
         InformationScaffoldViewControllerKt.InformationScaffoldViewController(
             onNavigateBack: { onNavigateBack() },
             onShowAlert: { onShowAlert() },
-            onShowBioAuth: { onShowBioAuth() }
+            onShowBioAuth: { onShowBioAuth() },
+            onAuthSuccess: { onAuthSuccess() }
         )
     }
 
@@ -26,12 +28,14 @@ struct InformationScreen: View {
     @State private var showAlert = false
     @State private var showBioAuth = false
     @State private var showScreenLockAlert = false
+    @State private var showAuthSuccessDialog = false
 
     var body: some View {
         InformationScaffoldComposeView(
             onNavigateBack: { dismiss() },
             onShowAlert: { showAlert = true },
-            onShowBioAuth: { showBioAuth = true }
+            onShowBioAuth: { showBioAuth = true },
+            onAuthSuccess: { showAuthSuccessDialog = true }
         )
         .ignoresSafeArea()
         .navigationBarHidden(true)
@@ -51,6 +55,11 @@ struct InformationScreen: View {
         } message: {
             Text(StringResourcesKt.getString(key: .informationScreenLockMessage))
         }
+        .alert(StringResourcesKt.getString(key: .authSuccessTitle), isPresented: $showAuthSuccessDialog) {
+            Button(StringResourcesKt.getString(key: .alertOk)) { showAuthSuccessDialog = false }
+        } message: {
+            Text(StringResourcesKt.getString(key: .authSuccessMessage))
+        }
     }
 
     private func startBiometricAuth() {
@@ -63,6 +72,12 @@ struct InformationScreen: View {
         context.evaluatePolicy(
             .deviceOwnerAuthentication,
             localizedReason: StringResourcesKt.getString(key: .bioAuthSubtitle)
-        ) { _, _ in }
+        ) { success, _ in
+            if success {
+                DispatchQueue.main.async {
+                    InformationScaffoldViewControllerKt.notifyInformationAuthSuccess()
+                }
+            }
+        }
     }
 }

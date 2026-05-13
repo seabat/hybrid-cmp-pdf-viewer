@@ -18,6 +18,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import hypbridcmppdfviewer.composeapp.generated.resources.Res
 import hypbridcmppdfviewer.composeapp.generated.resources.alert_ok
+import hypbridcmppdfviewer.composeapp.generated.resources.auth_success_message
+import hypbridcmppdfviewer.composeapp.generated.resources.auth_success_title
 import hypbridcmppdfviewer.composeapp.generated.resources.bio_auth_subtitle
 import hypbridcmppdfviewer.composeapp.generated.resources.bio_auth_title
 import hypbridcmppdfviewer.composeapp.generated.resources.information_alert_message
@@ -26,6 +28,7 @@ import hypbridcmppdfviewer.composeapp.generated.resources.information_screen_loc
 import hypbridcmppdfviewer.composeapp.generated.resources.information_screen_lock_title
 import dev.seabat.cmp.pdfviewer.resource.getString
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 /**
  * Android 用のインフォメーションページ
@@ -34,8 +37,10 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InformationScreen(onNavigateBack: () -> Unit) {
+    val viewModel: InformationViewModel = koinViewModel()
     var showDialog by remember { mutableStateOf(false) }
     var showScreenLockAlert by remember { mutableStateOf(false) }
+    var showAuthSuccessDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val activity = context as FragmentActivity
     if (showDialog) {
@@ -64,21 +69,37 @@ fun InformationScreen(onNavigateBack: () -> Unit) {
         )
     }
 
+    if (showAuthSuccessDialog) {
+        AlertDialog(
+            onDismissRequest = { showAuthSuccessDialog = false },
+            title = { Text(stringResource(Res.string.auth_success_title)) },
+            confirmButton = {
+                TextButton(onClick = { showAuthSuccessDialog = false }) {
+                    Text(stringResource(Res.string.alert_ok))
+                }
+            },
+            text = { Text(stringResource(Res.string.auth_success_message)) }
+        )
+    }
+
     InformationScaffold(
         onNavigateBack = onNavigateBack,
         onShowVersionAlert = { showDialog = true },
         onShowBioAuth = {
             showBiometricPrompt(
                 activity = activity,
-                onScreenLockNotSet = { showScreenLockAlert = true }
+                onScreenLockNotSet = { showScreenLockAlert = true },
+                onAuthSuccess = { viewModel.notifyAuthSuccess() }
             )
-        }
+        },
+        onAuthSuccess = { showAuthSuccessDialog = true }
     )
 }
 
 private fun showBiometricPrompt(
     activity: FragmentActivity,
-    onScreenLockNotSet: () -> Unit
+    onScreenLockNotSet: () -> Unit,
+    onAuthSuccess: () -> Unit
 ) {
     val authenticators = BIOMETRIC_STRONG or DEVICE_CREDENTIAL
     val canAuthenticate = BiometricManager.from(activity).canAuthenticate(authenticators)
@@ -91,7 +112,9 @@ private fun showBiometricPrompt(
         activity,
         ContextCompat.getMainExecutor(activity),
         object : BiometricPrompt.AuthenticationCallback() {
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {}
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                onAuthSuccess()
+            }
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {}
             override fun onAuthenticationFailed() {}
         }
