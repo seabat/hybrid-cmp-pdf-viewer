@@ -15,6 +15,7 @@ enum Destination: Hashable {
 /// NavigationStack 内で TopScreen / ViewerScreen 間の画面遷移を管理する
 struct NavigationView: View {
     @State private var path = [Destination]()
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -22,7 +23,9 @@ struct NavigationView: View {
                 .navigationDestination(for: Destination.self) { destination in
                     switch destination {
                     case .viewer(let fileName):
-                        ViewerScreen(fileName: fileName)
+                        ViewerScaffoldComposeView(fileName: fileName, onNavigateBack: { dismiss() })
+                            .ignoresSafeArea()
+                            .navigationBarHidden(true)
                     case .information:
                         InformationScreen()
                     }
