@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.seabat.cmp.pdfviewer.screen.information.InformationScreen
 import dev.seabat.cmp.pdfviewer.screen.top.TopScreen
-import dev.seabat.cmp.pdfviewer.screen.viewer.ViewerScreen
+import dev.seabat.cmp.pdfviewer.screen.viewer.ViewerScaffold
 
 /**
  * Android アプリのルートコンポーザブル
@@ -43,7 +43,7 @@ fun NavigationApp() {
             // ビューアページ
             composable("viewer/{fileName}") { backStackEntry ->
                 val fileName = backStackEntry.arguments?.getString("fileName") ?: ""
-                ViewerScreen(
+                ViewerScaffold(
                     fileName = fileName,
                     onNavigateBack = {
                         navController.popBackStack()

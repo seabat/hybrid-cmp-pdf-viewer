@@ -10,8 +10,9 @@ Compose Multiplatform フレームワークの構成。
 
 Compose Multiplatform による UI の共通化は Android と iOS の画面のコンテンツ部分に限定する。
 
-方法１と方法２のどちらかを採用。  
-ex. TopScreen は方法１、ViewerScreen は方法２
+- 方法１: TopScreen  
+- 方法２: InformationScreen
+- 方法３: ViewerScreen(ViewerScaffoldComposeView)
 
 <div align="center">
   <img src="docs/CMP_In_Native化案-UI共通化.png" width="600" alt="CMP_In_Native化案-UI共通化.png">
