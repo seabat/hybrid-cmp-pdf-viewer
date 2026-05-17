@@ -10,9 +10,12 @@ Compose Multiplatform フレームワークの構成。
 
 Compose Multiplatform による UI の共通化は Android と iOS の画面のコンテンツ部分に限定する。
 
-- 方法１: TopScreen  
-- 方法２: InformationScreen
-- 方法３: ViewerScreen(ViewerScaffoldComposeView)
+| 方法 |                    | Android   | iOS         |例      |
+|------|--------------------|-----------|-------------|-------|
+| A    |Scaffold の部品であるヘッダーとコンテンツを CMP で共通化する。|ネイティブ側に Screen コンポーザブル関数と Scaffold を配置して CMP の ヘッダーとコンテンツ を呼び出す。   |ネイティブ側に View protocol を実装した Screen  struct と VStack 等を配置して CMP の ヘッダーとコンテンツ を呼び出す。   |TopScreen | 
+| B    |Scafflod のラッパーを CMP で共通化する。|ネイティブ側に Screen コンポーザブル関数を配置し、CMP の Scaffold ラッパーを呼び出す。   |ネイティブ側に View protocol を実装した Screen  struct を配置して Scaffold ラッパーを呼び出す。  |InformationScreen |
+| C    |Scafflod のラッパーを CMP で共通化し、ラッパーを画面とする。|ネイティブ側に画面コンポーザブル関数を配置せず、CMP の Scaffold ラッパーを画面として使用する。  |ネイティブ側に View protocol を実装した Screen  struct を配置せず、CMP の Scaffold ラッパーを画面として使用する。   |ViewerScreen(ViewerScaffoldComposeView) |
+
 
 <div align="center">
   <img src="docs/CMP_In_Native化案-UI共通化.png" width="600" alt="CMP_In_Native化案-UI共通化.png">

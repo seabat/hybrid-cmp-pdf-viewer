@@ -9,7 +9,8 @@
       "Bash(./gradlew :shared:data:testDebugUnitTest :shared:domain:testDebugUnitTest)",
       "Bash(gh pr *)",
       "Bash(git stash *)",
-      "Bash(git pull *)"
+      "Bash(git pull *)",
+      "Bash(git *)"
     ]
   }
 }
