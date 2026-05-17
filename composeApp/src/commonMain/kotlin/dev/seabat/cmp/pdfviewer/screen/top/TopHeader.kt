@@ -22,7 +22,11 @@ fun TopHeader(
     onAddPdf: () -> Unit = {}
 ) {
     TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = AppColors.headerContainer.toComposeColor()),
+        colors = TopAppBarDefaults.topAppBarColors().copy(
+            containerColor = AppColors.headerContainer.toComposeColor(),
+            titleContentColor = AppColors.headerContent.toComposeColor(),
+            actionIconContentColor = AppColors.headerContent.toComposeColor()
+        ),
         title = { Text(stringResource(Res.string.top_header)) },
         actions = {
             IconButton(onClick = onAddPdf) {

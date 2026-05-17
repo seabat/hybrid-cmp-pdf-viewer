@@ -15,7 +15,11 @@ import dev.seabat.cmp.pdfviewer.theme.AppColors
 @Composable
 fun ViewerHeader(fileName: String, onNavigateBack: () -> Unit) {
     TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = AppColors.headerContainer.toComposeColor()),
+        colors = TopAppBarDefaults.topAppBarColors().copy(
+            containerColor = AppColors.headerContainer.toComposeColor(),
+            titleContentColor = AppColors.headerContent.toComposeColor(),
+            navigationIconContentColor = AppColors.headerContent.toComposeColor()
+        ),
         title = { Text(fileName) },
         navigationIcon = {
             IconButton(onClick = onNavigateBack) {
