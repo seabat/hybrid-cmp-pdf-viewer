@@ -7,7 +7,12 @@ import dev.seabat.cmp.pdfviewer.screen.top.TopHeader
  * iOS 向けのトップページヘッダーの ViewController
  * Kotlin Composable の TopHeader を ComposeUIViewController でラップして公開する
  */
-fun TopHeaderViewController(onNavigateToInformation: () -> Unit) =
-    ComposeUIViewController {
-        TopHeader(onNavigateToInformation = onNavigateToInformation)
-    }
+fun TopHeaderViewController(
+    onNavigateToInformation: () -> Unit,
+    onAddPdf: () -> Unit = {}
+) = ComposeUIViewController {
+    TopHeader(
+        onNavigateToInformation = onNavigateToInformation,
+        onAddPdf = onAddPdf
+    )
+}
