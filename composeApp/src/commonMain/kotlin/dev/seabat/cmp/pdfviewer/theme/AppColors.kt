@@ -18,6 +18,7 @@ data class AppColor(val argbHex: UInt) {
 }
 
 object AppColors {
-    val headerContainer  = AppColor(0xFF00FF00u)  // 純緑
-    val contentContainer = AppColor(0xFFFF00FFu)  // マゼンタ
+    val headerContainer  = AppColor(0xFF1565C0u)  // 深い青
+    val headerContent    = AppColor(0xFFFFFFFFu)  // 白
+    val contentContainer = AppColor(0xFFE0E0E0u)  // ライトグレー
 }

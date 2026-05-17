@@ -19,7 +19,11 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun InformationHeader(onNavigateBack: () -> Unit) {
     TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = AppColors.headerContainer.toComposeColor()),
+        colors = TopAppBarDefaults.topAppBarColors().copy(
+            containerColor = AppColors.headerContainer.toComposeColor(),
+            titleContentColor = AppColors.headerContent.toComposeColor(),
+            navigationIconContentColor = AppColors.headerContent.toComposeColor()
+        ),
         title = { Text(stringResource(Res.string.information_header)) },
         navigationIcon = {
             IconButton(onClick = onNavigateBack) {

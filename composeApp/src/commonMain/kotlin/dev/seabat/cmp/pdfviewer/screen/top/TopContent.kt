@@ -13,18 +13,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.seabat.cmp.pdfviewer.shareddomain.entity.PdfFile
-import dev.seabat.cmp.pdfviewer.shareddomain.entity.samplePdfFiles
 import dev.seabat.cmp.pdfviewer.theme.AppColors
 import hypbridcmppdfviewer.composeapp.generated.resources.Res
 import hypbridcmppdfviewer.composeapp.generated.resources.top_created_at
 import hypbridcmppdfviewer.composeapp.generated.resources.top_size
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 /**
  * トップページのコンテンツ (iOS と Android で共通)
@@ -35,12 +39,15 @@ fun TopContent(
     onNavigateToViewer: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val viewModel: TopViewModel = koinViewModel()
+    val pdfList by viewModel.pdfList.collectAsStateWithLifecycle()
+
     LazyColumn(
         modifier = modifier.background(AppColors.contentContainer.toComposeColor()).fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(samplePdfFiles) { file ->
+        items(pdfList) { file ->
             PdfFileItem(
                 file = file,
                 onClick = { onNavigateToViewer(file.name) }
@@ -53,6 +60,7 @@ fun TopContent(
 @Composable
 private fun PdfFileItem(file: PdfFile, onClick: () -> Unit) {
     Card(
+        colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
