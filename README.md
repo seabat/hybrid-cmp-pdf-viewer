@@ -1,3 +1,7 @@
+# ネイティブ、CMP ハイブリッド PDF Viewer
+
+既存の Android / iOS ネイティブアプリに Compose Multiplatform を段階的に導入し、UI を共通化していく手法を検証するサンプルプロジェクト。サンプル機能として PDF ビューアーを実装している。
+
 ### モジュール構成
 
 Compose Multiplatform フレームワークの構成。
@@ -8,34 +12,33 @@ Compose Multiplatform フレームワークの構成。
 
 ### UI 構成
 
-Compose Multiplatform による UI の共通化は Android と iOS の画面のコンテンツ部分に限定する。
+本プロジェクトにおける Compose Multiplatform による UI の共通化は画面または画面のコンテンツ部分に限定する。以下の３つの共通化方法を用いる。 
 
-| 方法 |                    | Android   | iOS         |例      |
-|------|--------------------|-----------|-------------|-------|
-| A    |Scaffold の部品であるヘッダーとコンテンツを CMP で共通化する。|ネイティブ側に Screen コンポーザブル関数と Scaffold を配置して CMP の ヘッダーとコンテンツ を呼び出す。   |ネイティブ側に View protocol を実装した Screen  struct と VStack 等を配置して CMP の ヘッダーとコンテンツ を呼び出す。   |TopScreen | 
-| B    |Scafflod のラッパーを CMP で共通化する。|ネイティブ側に Screen コンポーザブル関数を配置し、CMP の Scaffold ラッパーを呼び出す。   |ネイティブ側に View protocol を実装した Screen  struct を配置して Scaffold ラッパーを呼び出す。  |InformationScreen |
-| C    |Scafflod のラッパーを CMP で共通化し、ラッパーを画面とする。|ネイティブ側に画面コンポーザブル関数を配置せず、CMP の Scaffold ラッパーを画面として使用する。  |ネイティブ側に View protocol を実装した Screen  struct を配置せず、CMP の Scaffold ラッパーを画面として使用する。   |ViewerScreen(ViewerScaffoldComposeView) |
+| 方法 |                    | Android   | iOS         |共通化範囲 |例      |
+|------|--------------------|-----------|-------------|---------|--------|
+| A    |Scaffold の部品であるヘッダーとコンテンツを CMP で共通化する。|ネイティブ側に Screen コンポーザブル関数と Scaffold を配置して CMP の ヘッダーとコンテンツ を呼び出す。   |ネイティブ側に View protocol を実装した Screen  struct と VStack 等を配置して CMP の ヘッダーとコンテンツ を呼び出す。   |小 |TopScreen | 
+| B    |Scaffold のラッパーを CMP で共通化する。|ネイティブ側に Screen コンポーザブル関数を配置し、CMP の Scaffold ラッパーを呼び出す。   |ネイティブ側に View protocol を実装した Screen  struct を配置して Scaffold ラッパーを呼び出す。  |中 |InformationScreen |
+| C    |Scaffold のラッパーを CMP で共通化し、ラッパーを画面とする。|ネイティブ側に画面コンポーザブル関数を配置せず、CMP の Scaffold ラッパーを画面として使用する。  |ネイティブ側に View protocol を実装した Screen  struct を配置せず、CMP の Scaffold ラッパーを画面として使用する。   |大 |ViewerScreen(ViewerScaffoldComposeView) |
 
 
 <div align="center">
   <img src="docs/CMP_In_Native化案-UI共通化.png" width="600" alt="CMP_In_Native化案-UI共通化.png">
 </div>
 
-### Build and Run Android Application
+### Android アプリのビルドと実行
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
+Android アプリの開発版をビルド・実行するには、IDE ツールバーの実行ウィジェットから実行構成を使用するか、ターミナルから直接ビルドする。
+
+- macOS / Linux
   ```shell
   ./gradlew :composeApp:assembleDebug
   ```
-- on Windows
+- Windows
   ```shell
   .\gradlew.bat :composeApp:assembleDebug
   ```
 
-### Build and Run iOS Application
+### iOS アプリのビルドと実行
 
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+iOS アプリの開発版をビルド・実行するには、IDE ツールバーの実行ウィジェットから実行構成を使用するか、[/iosApp](./iosApp) ディレクトリを Xcode で開いて実行する。
 
