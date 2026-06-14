@@ -14,6 +14,9 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
 
 dependencyResolutionManagement {
     repositories {
@@ -28,10 +31,8 @@ dependencyResolutionManagement {
     }
 }
 
-include(":composeApp")
+include(":androidApp")
 
-include(":shared:domain")
-project(":shared:domain").projectDir = File("$rootDir/shared-domain")
-
-include(":shared:data")
-project(":shared:data").projectDir = File("$rootDir/shared-data")
+include(":shared-ui")
+include(":shared-domain")
+include(":shared-data")

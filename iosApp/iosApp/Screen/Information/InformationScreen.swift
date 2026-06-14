@@ -1,5 +1,5 @@
 import SwiftUI
-import ComposeApp
+import SharedUI
 import LocalAuthentication
 
 /// Kotlin Composable の InformationScaffold を UIViewControllerRepresentable でラップするビュー

@@ -1,14 +1,15 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.androidMultiplatformLibrary)
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    androidLibrary {
+        namespace = "dev.seabat.cmp.pdfviewer.shareddata"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
@@ -26,50 +27,16 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.shared.domain)
+            implementation(projects.sharedDomain)
 
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
             implementation(libs.kotlinx.coroutines.core)
         }
 
-        androidMain.dependencies {
-        }
-
-        iosMain.dependencies {
-        }
-
         commonTest.dependencies {
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
-        }
-    }
-}
-
-android {
-    namespace = "dev.seabat.cmp.pdfviewer.shareddata"
-    compileSdk =
-        libs.versions.android.compileSdk
-            .get()
-            .toInt()
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    buildFeatures {
-        buildConfig = true
-    }
-    defaultConfig {
-        minSdk =
-            libs.versions.android.minSdk
-                .get()
-                .toInt()
-        buildConfigField("String", "VERSION_NAME", "\"1.0\"")
-    }
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            consumerProguardFiles("consumer-rules.pro")
         }
     }
 }

@@ -1,0 +1,84 @@
+package dev.seabat.cmp.pdfviewer.screen.top
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import dev.seabat.cmp.pdfviewer.shareddomain.entity.PdfFile
+import dev.seabat.cmp.pdfviewer.theme.AppColors
+import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.Res
+import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.top_created_at
+import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.top_size
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+
+/**
+ * トップページのコンテンツ (iOS と Android で共通)
+ * ファイル一覧を表示し、タップで [onNavigateToViewer] を呼び出す
+ */
+@Composable
+fun TopContent(
+    onNavigateToViewer: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val viewModel: TopViewModel = koinViewModel()
+    val pdfList by viewModel.pdfList.collectAsStateWithLifecycle()
+
+    LazyColumn(
+        modifier = modifier.background(AppColors.contentContainer.toComposeColor()).fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(pdfList) { file ->
+            PdfFileItem(
+                file = file,
+                onClick = { onNavigateToViewer(file.fileName) }
+            )
+        }
+    }
+}
+
+/** PDF ファイル一覧の各アイテム */
+@Composable
+private fun PdfFileItem(file: PdfFile, onClick: () -> Unit) {
+    Card(
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = file.displayName.ifEmpty { file.fileName },
+                style = MaterialTheme.typography.titleMedium
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "作成日時: ${file.createdAt}",
+                style = MaterialTheme.typography.bodySmall
+            )
+            Text(
+                text = "サイズ: ${file.size}",
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+    }
+}
