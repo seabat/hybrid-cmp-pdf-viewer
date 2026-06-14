@@ -7,9 +7,9 @@ package dev.seabat.cmp.pdfviewer.viewcontroller.top
  * onAdd は TopContentViewController の DisposableEffect 内で設定される。
  */
 class PdfAddBridge {
-    internal var onAdd: ((String, String, String) -> Unit)? = null
+    internal var onAdd: ((String, String, String, String) -> Unit)? = null
 
-    fun add(name: String, createdAt: String, size: String) {
-        onAdd?.invoke(name, createdAt, size)
+    fun add(sourceUrl: String, name: String, createdAt: String, size: String) {
+        onAdd?.invoke(sourceUrl, name, createdAt, size)
     }
 }

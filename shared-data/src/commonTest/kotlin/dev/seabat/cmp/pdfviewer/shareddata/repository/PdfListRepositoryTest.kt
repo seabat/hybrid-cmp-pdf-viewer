@@ -12,7 +12,7 @@ class PdfListRepositoryTest {
 
     @Test
     fun testSaveAndRead() = runTest {
-        val pdfList = listOf(PdfFile(name = "test.pdf", createdAt = "2025-01-01 10:00", size = "1.2 MB"))
+        val pdfList = listOf(PdfFile(fileName = "test.pdf", createdAt = "2025-01-01 10:00", size = "1.2 MB"))
         repository.save(pdfList)
         assertEquals(pdfList, repository.read())
     }

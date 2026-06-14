@@ -20,8 +20,8 @@ fun TopContentViewController(
     val viewModel: TopViewModel = koinViewModel()
 
     DisposableEffect(Unit) {
-        pdfAddBridge.onAdd = { name, createdAt, size ->
-            viewModel.addPdfFile(name = name, createdAt = createdAt, size = size)
+        pdfAddBridge.onAdd = { sourceUrl, name, createdAt, size ->
+            viewModel.addPdfFile(sourceUri = sourceUrl, name = name, createdAt = createdAt, size = size)
         }
         onDispose {
             pdfAddBridge.onAdd = null

@@ -17,7 +17,7 @@ class ReadPdfListUseCaseTest {
 
     @Test
     fun testReadPdfList() = runTest {
-        val pdfList = listOf(PdfFile(name = "test.pdf", createdAt = "2025-01-01 10:00", size = "1.2 MB"))
+        val pdfList = listOf(PdfFile(fileName = "test.pdf", createdAt = "2025-01-01 10:00", size = "1.2 MB"))
         fakeRepository.save(pdfList)
         val useCase: ReadPdfListUseCaseContract = ReadPdfListUseCase(fakeRepository)
         assertEquals(pdfList, useCase())
