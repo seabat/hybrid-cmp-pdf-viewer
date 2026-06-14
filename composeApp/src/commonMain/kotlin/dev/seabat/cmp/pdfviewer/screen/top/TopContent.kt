@@ -50,7 +50,7 @@ fun TopContent(
         items(pdfList) { file ->
             PdfFileItem(
                 file = file,
-                onClick = { onNavigateToViewer(file.name) }
+                onClick = { onNavigateToViewer(file.fileName) }
             )
         }
     }
@@ -67,7 +67,7 @@ private fun PdfFileItem(file: PdfFile, onClick: () -> Unit) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = file.name,
+                text = file.displayName.ifEmpty { file.fileName },
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(modifier = Modifier.height(4.dp))

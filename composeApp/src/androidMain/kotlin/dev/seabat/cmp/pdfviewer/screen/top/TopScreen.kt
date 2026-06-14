@@ -51,7 +51,7 @@ fun TopScreen(onNavigateToViewer: (String) -> Unit, onNavigateToInformation: () 
         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
         formatter.calendar = java.util.GregorianCalendar()
         val createdAt = formatter.format(dateSource)
-        viewModel.addPdfFile(name = name, createdAt = createdAt, size = size)
+        viewModel.addPdfFile(sourceUri = uri.toString(), name = name, createdAt = createdAt, size = size)
     }
 
     Scaffold(

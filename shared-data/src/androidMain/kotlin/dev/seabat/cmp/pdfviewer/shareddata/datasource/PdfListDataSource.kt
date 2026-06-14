@@ -16,9 +16,11 @@ actual class PdfListDataSource actual constructor() : PdfListDataSourceContract 
         prefs.edit().apply {
             putInt("pdf_count", pdfList.size)
             pdfList.forEachIndexed { i, file ->
-                putString("pdf_${i}_name", file.name)
+                putString("pdf_${i}_name", file.fileName)
+                putString("pdf_${i}_displayName", file.displayName)
                 putString("pdf_${i}_createdAt", file.createdAt)
                 putString("pdf_${i}_size", file.size)
+                putString("pdf_${i}_filePath", file.filePath)
             }
             apply()
         }
@@ -27,10 +29,12 @@ actual class PdfListDataSource actual constructor() : PdfListDataSourceContract 
     override fun read(): List<PdfFile> {
         val count = prefs.getInt("pdf_count", 0)
         return (0 until count).mapNotNull { i ->
-            val name = prefs.getString("pdf_${i}_name", null) ?: return@mapNotNull null
+            val fileName = prefs.getString("pdf_${i}_name", null) ?: return@mapNotNull null
+            val displayName = prefs.getString("pdf_${i}_displayName", "") ?: ""
             val createdAt = prefs.getString("pdf_${i}_createdAt", null) ?: return@mapNotNull null
             val size = prefs.getString("pdf_${i}_size", null) ?: return@mapNotNull null
-            PdfFile(name = name, createdAt = createdAt, size = size)
+            val filePath = prefs.getString("pdf_${i}_filePath", "") ?: ""
+            PdfFile(fileName = fileName, displayName = displayName, createdAt = createdAt, size = size, filePath = filePath)
         }
     }
 }

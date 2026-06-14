@@ -60,8 +60,8 @@ struct TopScreen: View {
             )
         }
         .sheet(isPresented: $showDocumentPicker) {
-            DocumentPickerView { name, createdAt, size in
-                pdfAddBridge.add(name: name, createdAt: createdAt, size: size)
+            DocumentPickerView { sourceUrl, name, createdAt, size in
+                pdfAddBridge.add(sourceUrl: sourceUrl, name: name, createdAt: createdAt, size: size)
             }
         }
     }

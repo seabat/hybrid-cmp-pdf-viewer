@@ -4,7 +4,7 @@ import UniformTypeIdentifiers
 
 /// UIDocumentPickerViewController のラッパー
 struct DocumentPickerView: UIViewControllerRepresentable {
-    var onFilePicked: (String, String, String) -> Void
+    var onFilePicked: (String, String, String, String) -> Void
 
     func makeCoordinator() -> Coordinator {
         Coordinator(onFilePicked: onFilePicked)
@@ -20,9 +20,9 @@ struct DocumentPickerView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
 
     class Coordinator: NSObject, UIDocumentPickerDelegate {
-        var onFilePicked: (String, String, String) -> Void
+        var onFilePicked: (String, String, String, String) -> Void
 
-        init(onFilePicked: @escaping (String, String, String) -> Void) {
+        init(onFilePicked: @escaping (String, String, String, String) -> Void) {
             self.onFilePicked = onFilePicked
         }
 
@@ -53,7 +53,15 @@ struct DocumentPickerView: UIViewControllerRepresentable {
             formatter.dateFormat = "yyyy-MM-dd HH:mm"
             let createdAt = formatter.string(from: creationDate)
 
-            onFilePicked(name, createdAt, sizeFormatted)
+            // セキュリティアクセスが有効な間に一時ディレクトリへ同期コピーする。
+            // defer で stopAccessingSecurityScopedResource が呼ばれた後に
+            // Kotlin コルーチンが元 URL へアクセスしても失効しているため。
+            let tempUrl = FileManager.default.temporaryDirectory
+                .appendingPathComponent(UUID().uuidString)
+                .appendingPathExtension("pdf")
+            try? FileManager.default.copyItem(at: url, to: tempUrl)
+
+            onFilePicked(tempUrl.absoluteString, name, createdAt, sizeFormatted)
         }
     }
 }
