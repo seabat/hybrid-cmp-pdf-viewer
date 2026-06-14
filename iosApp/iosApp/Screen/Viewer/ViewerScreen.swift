@@ -1,5 +1,5 @@
 import SwiftUI
-import ComposeApp
+import SharedUI
 
 /// Kotlin Composable の ViewerScaffold を UIViewControllerRepresentable でラップするビュー
 struct ViewerScaffoldComposeView: UIViewControllerRepresentable {

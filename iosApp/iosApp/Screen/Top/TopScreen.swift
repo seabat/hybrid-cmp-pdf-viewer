@@ -1,6 +1,6 @@
 import UIKit
 import SwiftUI
-import ComposeApp
+import SharedUI
 
 /// Kotlin Composable の TopHeader を UIViewControllerRepresentable でラップするビュー
 private struct TopHeaderComposeView: UIViewControllerRepresentable {

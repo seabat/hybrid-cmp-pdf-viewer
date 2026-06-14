@@ -1,5 +1,5 @@
 import SwiftUI
-import ComposeApp
+import SharedUI
 
 /// Kotlin の AppColor を SwiftUI の Color に変換する拡張
 extension Color {
