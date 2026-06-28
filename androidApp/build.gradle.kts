@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.skydoves.navgraph)
 }
 
 android {
@@ -34,10 +36,12 @@ android {
 dependencies {
     implementation(project(":shared-ui"))
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.biometric)
     implementation(libs.androidx.navigation.compose)
     implementation(compose.material3)
     implementation(compose.components.resources)
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
     debugImplementation(libs.compose.uiTooling)
 }
