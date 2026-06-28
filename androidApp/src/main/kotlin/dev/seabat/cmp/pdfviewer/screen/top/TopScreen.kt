@@ -15,9 +15,11 @@ import dev.seabat.cmp.pdfviewer.theme.AppColors
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import androidx.compose.ui.tooling.preview.Preview
 import com.github.skydoves.navgraph.annotations.NavDestination
 import com.github.skydoves.navgraph.annotations.NavEdge
 import com.github.skydoves.navgraph.annotations.NavGraphRoot
+import com.github.skydoves.navgraph.annotations.NavPreview
 import dev.seabat.cmp.pdfviewer.navigation.Screen
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -72,6 +74,13 @@ fun TopScreen(onNavigateToViewer: (String) -> Unit, onNavigateToInformation: () 
             modifier = Modifier.padding(padding)
         )
     }
+}
+
+@NavPreview(route = Screen.Top::class, primary = true)
+@Preview
+@Composable
+fun TopScreenPreview() {
+    TopScreen(onNavigateToViewer = {}, onNavigateToInformation = {})
 }
 
 private fun formatFileSize(bytes: Long): String = when {

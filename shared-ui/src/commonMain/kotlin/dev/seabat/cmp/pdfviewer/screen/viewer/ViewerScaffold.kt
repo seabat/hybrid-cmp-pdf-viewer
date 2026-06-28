@@ -6,8 +6,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.github.skydoves.navgraph.annotations.NavDestination
+import com.github.skydoves.navgraph.annotations.NavPreview
 import dev.seabat.cmp.pdfviewer.navigation.Screen
 import dev.seabat.cmp.pdfviewer.theme.AppColors
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @NavDestination(route = Screen.Viewer::class)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,4 +26,11 @@ fun ViewerScaffold(fileName: String, onNavigateBack: () -> Unit) {
             modifier = Modifier.padding(padding)
         )
     }
+}
+
+@NavPreview(route = Screen.Viewer::class, primary = true)
+@Preview
+@Composable
+fun ViewerScaffoldPreview() {
+    ViewerScaffold(fileName = "sample.pdf", onNavigateBack = {})
 }
