@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.seabat.cmp.pdfviewer.theme.AppColors
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -45,4 +46,10 @@ fun ViewerContent(
             is ViewerUiState.Error -> Text("PDF を読み込めませんでした")
         }
     }
+}
+
+@Preview
+@Composable
+fun ViewerContentPreview() {
+    ViewerContent(fileName = "sample.pdf")
 }

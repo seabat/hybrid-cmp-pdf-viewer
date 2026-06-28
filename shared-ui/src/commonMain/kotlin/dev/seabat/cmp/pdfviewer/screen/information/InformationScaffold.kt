@@ -6,6 +6,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.seabat.cmp.pdfviewer.theme.AppColors
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,4 +29,10 @@ fun InformationScaffold(
             onAuthSuccess = onAuthSuccess
         )
     }
+}
+
+@Preview
+@Composable
+fun InformationScaffoldPreview() {
+    InformationScaffold(onNavigateBack = {})
 }

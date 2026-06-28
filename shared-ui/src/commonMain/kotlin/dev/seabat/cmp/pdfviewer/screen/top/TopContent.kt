@@ -28,6 +28,7 @@ import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.Res
 import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.top_created_at
 import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.top_size
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -54,6 +55,12 @@ fun TopContent(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun TopContentPreview() {
+    TopContent(onNavigateToViewer = {})
 }
 
 /** PDF ファイル一覧の各アイテム */

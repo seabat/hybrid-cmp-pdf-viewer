@@ -41,6 +41,7 @@ kotlin {
         commonMain.dependencies {
             api(project(":shared-domain"))
             implementation(project(":shared-data"))
+            implementation(libs.compose.uiToolingPreview)
 
             implementation(compose.runtime)
             implementation(compose.foundation)

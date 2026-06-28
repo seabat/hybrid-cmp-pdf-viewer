@@ -15,6 +15,7 @@ import dev.seabat.cmp.pdfviewer.theme.AppColors
 import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.Res
 import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.top_header
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,4 +49,10 @@ fun TopHeader(
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun TopHeaderPreview() {
+    TopHeader(onNavigateToInformation = {})
 }
