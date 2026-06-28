@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.skydoves.navgraph)
     id("co.touchlab.skie") version "0.10.12"
 }
 
@@ -34,12 +36,12 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.navigation.compose)
-            implementation(libs.androidx.biometric)
             implementation(libs.koin.android)
         }
         commonMain.dependencies {
             api(project(":shared-domain"))
             implementation(project(":shared-data"))
+            implementation(libs.compose.uiToolingPreview)
 
             implementation(compose.runtime)
             implementation(compose.foundation)

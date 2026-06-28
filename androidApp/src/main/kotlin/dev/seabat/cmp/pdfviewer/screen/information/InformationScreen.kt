@@ -27,13 +27,14 @@ import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.information_alert_t
 import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.information_screen_lock_message
 import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.information_screen_lock_title
 import dev.seabat.cmp.pdfviewer.resource.getString
+import androidx.compose.ui.tooling.preview.Preview
+import com.github.skydoves.navgraph.annotations.NavDestination
+import com.github.skydoves.navgraph.annotations.NavPreview
+import dev.seabat.cmp.pdfviewer.navigation.Screen
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-/**
- * Android 用のインフォメーションページ
- * Scaffold + TopAppBar で [InformationContent] をラップする
- */
+@NavDestination(route = Screen.Information::class)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InformationScreen(onNavigateBack: () -> Unit) {
@@ -94,6 +95,13 @@ fun InformationScreen(onNavigateBack: () -> Unit) {
         },
         onAuthSuccess = { showAuthSuccessDialog = true }
     )
+}
+
+@NavPreview(route = Screen.Information::class, primary = true)
+@Preview
+@Composable
+fun InformationScreenPreview() {
+    InformationScreen(onNavigateBack = {})
 }
 
 private fun showBiometricPrompt(

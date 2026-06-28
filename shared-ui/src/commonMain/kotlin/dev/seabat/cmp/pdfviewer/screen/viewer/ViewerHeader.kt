@@ -10,6 +10,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import dev.seabat.cmp.pdfviewer.theme.AppColors
+import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,4 +31,10 @@ fun ViewerHeader(fileName: String, onNavigateBack: () -> Unit) {
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun ViewerHeaderPreview() {
+    ViewerHeader(fileName = "sample.pdf", onNavigateBack = {})
 }

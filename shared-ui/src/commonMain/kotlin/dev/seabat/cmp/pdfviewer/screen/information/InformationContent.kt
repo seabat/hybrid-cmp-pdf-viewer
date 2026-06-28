@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.tooling.preview.Preview
 import dev.seabat.cmp.pdfviewer.theme.AppColors
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -55,4 +56,10 @@ fun InformationContent(
             HorizontalDivider()
         }
     }
+}
+
+@Preview
+@Composable
+fun InformationContentPreview() {
+    InformationContent()
 }
