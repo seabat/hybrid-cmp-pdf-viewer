@@ -9,7 +9,7 @@ import com.github.skydoves.navgraph.annotations.NavDestination
 import com.github.skydoves.navgraph.annotations.NavPreview
 import dev.seabat.cmp.pdfviewer.navigation.Screen
 import dev.seabat.cmp.pdfviewer.theme.AppColors
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 @NavDestination(route = Screen.Viewer::class)
 @OptIn(ExperimentalMaterial3Api::class)

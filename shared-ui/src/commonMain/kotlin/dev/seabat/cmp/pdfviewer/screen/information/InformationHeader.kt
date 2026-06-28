@@ -13,8 +13,8 @@ import dev.seabat.cmp.pdfviewer.theme.AppColors
 import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.Res
 import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.information_header
 import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.top_header
+import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
