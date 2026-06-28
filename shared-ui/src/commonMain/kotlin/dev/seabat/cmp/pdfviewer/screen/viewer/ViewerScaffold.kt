@@ -5,8 +5,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.github.skydoves.navgraph.annotations.NavDestination
+import dev.seabat.cmp.pdfviewer.navigation.Screen
 import dev.seabat.cmp.pdfviewer.theme.AppColors
 
+@NavDestination(route = Screen.Viewer::class)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ViewerScaffold(fileName: String, onNavigateBack: () -> Unit) {

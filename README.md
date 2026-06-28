@@ -25,6 +25,21 @@ Compose Multiplatform フレームワークの構成。
   <img src="docs/CMP_In_Native化案-UI共通化.png" width="600" alt="CMP_In_Native化案-UI共通化.png">
 </div>
 
+### ナビゲーション
+
+Android のナビゲーションには Jetpack Navigation Compose を使用し、[skydoves/compose-navy-graph](https://github.com/skydoves/compose-navy-graph) プラグインを適用している。
+
+各画面に以下のアノテーションを付与することで、IDE の **NavGraph Graph** パネルに画面遷移グラフとプレビューを表示できる。
+
+| アノテーション | 用途 |
+|---|---|
+| `@NavGraphRoot` | ナビゲーションのルート画面（`TopScreen`）に付与 |
+| `@NavDestination(route = Screen.Xxx::class)` | ナビゲーションの遷移先画面に付与 |
+| `@NavEdge(to = Screen.Xxx::class)` | 画面間の遷移エッジを定義 |
+| `@NavPreview(route = Screen.Xxx::class, primary = true)` | 各画面のプレビュー関数に付与し、NavGraph Previews にサムネイルを表示 |
+
+ルート定義は `shared-ui/src/commonMain/.../navigation/Screen.kt` に配置している。
+
 ### Android アプリのビルドと実行
 
 Android アプリの開発版をビルド・実行するには、IDE ツールバーの実行ウィジェットから実行構成を使用するか、ターミナルから直接ビルドする。

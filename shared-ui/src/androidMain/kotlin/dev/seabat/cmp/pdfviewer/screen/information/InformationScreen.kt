@@ -27,13 +27,12 @@ import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.information_alert_t
 import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.information_screen_lock_message
 import dev.seabat.cmp.pdfviewer.sharedui.generated.resources.information_screen_lock_title
 import dev.seabat.cmp.pdfviewer.resource.getString
+import com.github.skydoves.navgraph.annotations.NavDestination
+import dev.seabat.cmp.pdfviewer.navigation.Screen
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-/**
- * Android 用のインフォメーションページ
- * Scaffold + TopAppBar で [InformationContent] をラップする
- */
+@NavDestination(route = Screen.Information::class)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InformationScreen(onNavigateBack: () -> Unit) {

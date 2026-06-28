@@ -18,6 +18,8 @@ koin = "4.2.1"
 kotlin = "2.3.20"
 kotlinxCoroutines = "1.11.0"
 navigationCompose = "2.9.8"
+ksp = "2.3.2"
+navgraph = "0.2.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
@@ -55,3 +57,5 @@ androidMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library",
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+skydoves-navgraph = { id = "com.github.skydoves.navgraph", version.ref = "navgraph" }
