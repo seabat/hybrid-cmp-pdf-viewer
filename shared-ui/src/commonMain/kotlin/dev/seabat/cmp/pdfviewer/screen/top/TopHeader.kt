@@ -21,13 +21,11 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun TopHeader(
     onNavigateToInformation: () -> Unit,
-    onAddPdf: () -> Unit = {}
+    onAddPdf: () -> Unit = {},
+    windowInsets: WindowInsets = TopAppBarDefaults.windowInsets
 ) {
     TopAppBar(
-        // CMP 1.11.x から ComposeUIViewController 内で TopAppBar がステータスバー分の
-        // 上インセットを自動適用するようになり、iOS の frame(height: 64) 枠外に
-        // コンテンツが押し出されるため、インセットを 0 に上書きする
-        windowInsets = WindowInsets(0),
+        windowInsets = windowInsets,
         colors = TopAppBarDefaults.topAppBarColors().copy(
             containerColor = AppColors.headerContainer.toComposeColor(),
             titleContentColor = AppColors.headerContent.toComposeColor(),
