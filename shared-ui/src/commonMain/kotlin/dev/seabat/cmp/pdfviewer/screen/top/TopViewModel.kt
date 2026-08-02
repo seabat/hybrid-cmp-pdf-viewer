@@ -22,21 +22,27 @@ class TopViewModel(
 
     init {
         viewModelScope.launch {
-            _pdfList.value = readPdfListUseCase()
+            try {
+                _pdfList.value = readPdfListUseCase()
+            } catch (_: Exception) {
+            }
         }
     }
 
     fun addPdfFile(sourceUri: String, name: String, createdAt: String, size: String) {
         viewModelScope.launch {
-            val filePath = copyPdfFileUseCase(sourceUri = sourceUri, destFileName = name)
-            val newList = _pdfList.value + PdfFile(
-                fileName = name,
-                createdAt = createdAt,
-                size = size,
-                filePath = filePath
-            )
-            _pdfList.value = newList
-            savePdfListUseCase(newList)
+            try {
+                val filePath = copyPdfFileUseCase(sourceUri = sourceUri, destFileName = name)
+                val newList = _pdfList.value + PdfFile(
+                    fileName = name,
+                    createdAt = createdAt,
+                    size = size,
+                    filePath = filePath
+                )
+                _pdfList.value = newList
+                savePdfListUseCase(newList)
+            } catch (_: Exception) {
+            }
         }
     }
 }
