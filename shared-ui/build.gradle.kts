@@ -69,6 +69,30 @@ compose.resources {
     packageOfResClass = "dev.seabat.cmp.pdfviewer.sharedui.generated.resources"
 }
 
+// [ワークアラウンド] com.android.kotlin.multiplatform.library + CMP 互換性問題
+// CMP の CopyResourcesToAndroidAssetsTask が com.android.library 向けの API を前提としており、
+// com.android.kotlin.multiplatform.library プラグインが outputDirectory を設定しないため、
+// copyAndroidMainComposeResourcesToAndroidAssets タスクが機能せず Android 向けリソースが AAR に含まれない。
+//
+// 解除条件: 以下のいずれかで copyAndroidMainComposeResourcesToAndroidAssets が正常動作したら削除する
+//   - CMP が com.android.kotlin.multiplatform.library に対応した場合
+//   - AGP が新しいプラグインで assets ディレクトリの API を整備した場合
+//   確認方法: `./gradlew :shared-ui:copyAndroidMainComposeResourcesToAndroidAssets` でエラーが出なければ解除可
+val assembleAndroidMainComposeResources by tasks.registering(Copy::class) {
+    val preparedDir = layout.buildDirectory
+        .dir("generated/compose/resourceGenerator/preparedResources/commonMain/composeResources")
+    val outputDir = layout.buildDirectory
+        .dir("generated/compose/resourceGenerator/assembledResources/androidMain/composeResources/dev.seabat.cmp.pdfviewer.sharedui.generated.resources")
+    dependsOn("prepareComposeResourcesTaskForCommonMain")
+    from(preparedDir)
+    into(outputDir)
+}
+
+afterEvaluate {
+    tasks.findByName("bundleAndroidMainAar")?.dependsOn(assembleAndroidMainComposeResources)
+    tasks.findByName("androidPreBuild")?.dependsOn(assembleAndroidMainComposeResources)
+}
+
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
 }

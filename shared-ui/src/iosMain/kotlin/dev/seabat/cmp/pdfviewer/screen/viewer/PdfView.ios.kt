@@ -5,22 +5,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.CoreGraphics.CGRectMake
+import platform.Foundation.NSData
+import platform.Foundation.NSFileManager
+import platform.Foundation.dataWithContentsOfFile
 import platform.PDFKit.PDFDocument
 import platform.PDFKit.PDFView
 import platform.PDFKit.kPDFDisplaySinglePageContinuous
-import platform.Foundation.NSURL
+import platform.UIKit.UIView
 
 @OptIn(ExperimentalForeignApi::class)
 @Composable
 actual fun PdfView(filePath: String, modifier: Modifier) {
-    UIKitView(
+    UIKitView<UIView>(
         factory = {
-            val pdfView = PDFView(frame = CGRectMake(0.0, 0.0, 0.0, 0.0))
-            pdfView.autoScales = true
-            pdfView.displayMode = kPDFDisplaySinglePageContinuous
-            val url = NSURL.fileURLWithPath(filePath)
-            PDFDocument(url)?.let { pdfView.document = it }
-            pdfView
+            val pdfView: PDFView? = PDFView(frame = CGRectMake(0.0, 0.0, 0.0, 0.0))
+            pdfView?.apply {
+                autoScales = true
+                displayMode = kPDFDisplaySinglePageContinuous
+            } ?: UIView(frame = CGRectMake(0.0, 0.0, 0.0, 0.0))
+        },
+        update = { view ->
+            if (NSFileManager.defaultManager.fileExistsAtPath(filePath)) {
+                (view as? PDFView)?.let { pdfView ->
+                    val data: NSData? = NSData.dataWithContentsOfFile(filePath)
+                    val doc: PDFDocument? = data?.let { PDFDocument(data = it) }
+                    doc?.let { pdfView.document = it }
+                }
+            }
         },
         modifier = modifier
     )

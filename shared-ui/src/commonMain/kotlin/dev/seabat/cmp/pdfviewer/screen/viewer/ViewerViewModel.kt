@@ -23,11 +23,15 @@ class ViewerViewModel(
 
     fun loadPdf(fileName: String) {
         viewModelScope.launch {
-            val pdfFile = findPdfFileByNameUseCase(fileName)
-            _uiState.value = if (pdfFile != null && pdfFile.filePath.isNotEmpty()) {
-                ViewerUiState.Success(pdfFile.filePath)
-            } else {
-                ViewerUiState.Error
+            try {
+                val pdfFile = findPdfFileByNameUseCase(fileName)
+                _uiState.value = if (pdfFile != null && pdfFile.filePath.isNotEmpty()) {
+                    ViewerUiState.Success(pdfFile.filePath)
+                } else {
+                    ViewerUiState.Error
+                }
+            } catch (_: Exception) {
+                _uiState.value = ViewerUiState.Error
             }
         }
     }

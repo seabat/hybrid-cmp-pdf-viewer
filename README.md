@@ -57,3 +57,35 @@ Android アプリの開発版をビルド・実行するには、IDE ツール�
 
 iOS アプリの開発版をビルド・実行するには、IDE ツールバーの実行ウィジェットから実行構成を使用するか、[/iosApp](./iosApp) ディレクトリを Xcode で開いて実行する。
 
+---
+
+### 既知の問題とワークアラウンド
+
+#### CMP リソースが Android APK に含まれない問題
+
+**影響バージョン**: AGP 9.2.1 + CMP 1.11.1
+
+**症状**: `stringResource()` を使う Composable に遷移すると以下の例外でクラッシュする。
+
+```
+MissingResourceException: Missing resource with path:
+  composeResources/{package}.generated.resources/values/strings.commonMain.cvr
+```
+
+**原因**: `shared-ui` モジュールが使用する `com.android.kotlin.multiplatform.library` プラグインは AGP 9.x で導入された KMP 専用の Android ライブラリプラグインである。CMP の `CopyResourcesToAndroidAssetsTask` は従来の `com.android.library` プラグインの assets ディレクトリ API を前提としており、新しいプラグインに対応していないため `outputDirectory` が設定されず、`composeResources/` 以下の CVR ファイルが AAR・APK に含まれない。
+
+**ワークアラウンド**: 以下の2ファイルで回避している。
+
+| ファイル | 内容 |
+|---|---|
+| `shared-ui/build.gradle.kts` | `assembleAndroidMainComposeResources` タスクを追加し、`commonMain` の prepared resources を package prefix 付きで assembled ディレクトリへコピーする |
+| `androidApp/build.gradle.kts` | `android.sourceSets["main"].assets.srcDirs` で生成ディレクトリを追加し、`mergeDebugAssets` / `mergeReleaseAssets` が `assembleAndroidMainComposeResources` の後に実行されるよう依存を宣言する |
+
+**解除条件**: 以下のコマンドが `BUILD SUCCESSFUL` で完了したら、両ファイルの `[ワークアラウンド]` コメントが付いたブロックを削除できる。
+
+```shell
+./gradlew :shared-ui:copyAndroidMainComposeResourcesToAndroidAssets
+```
+
+CMP または AGP のいずれかが対応することで解決する見込み。
+
