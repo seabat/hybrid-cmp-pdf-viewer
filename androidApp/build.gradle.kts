@@ -31,7 +31,30 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    // [ワークアラウンド] shared-ui/build.gradle.kts の assembleAndroidMainComposeResources タスクと対になる設定
+    // shared-ui の CMP リソースを Android assets に含める（shared-ui/build.gradle.kts のコメント参照）
+    sourceSets {
+        getByName("main") {
+            assets.srcDirs(
+                rootProject.file("shared-ui/build/generated/compose/resourceGenerator/assembledResources/androidMain")
+            )
+        }
+    }
 }
+
+// [ワークアラウンド] shared-ui:assembleAndroidMainComposeResources → mergeDebugAssets / mergeReleaseAssets
+// の順序を明示的に宣言する（Gradle の implicit dependency 検証を満たすため）
+evaluationDependsOn(":shared-ui")
+afterEvaluate {
+    val sharedUiAssembleTask = project(":shared-ui").tasks.findByName("assembleAndroidMainComposeResources")
+    if (sharedUiAssembleTask != null) {
+        listOf("mergeDebugAssets", "mergeReleaseAssets").forEach { taskName ->
+            tasks.findByName(taskName)?.dependsOn(sharedUiAssembleTask)
+        }
+    }
+}
+
 
 dependencies {
     implementation(project(":shared-ui"))
