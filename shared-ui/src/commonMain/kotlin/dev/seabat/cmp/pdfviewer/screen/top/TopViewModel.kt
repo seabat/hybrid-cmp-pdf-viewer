@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.seabat.cmp.pdfviewer.shareddomain.entity.PdfFile
 import dev.seabat.cmp.pdfviewer.shareddomain.usecase.CopyPdfFileUseCaseContract
+import dev.seabat.cmp.pdfviewer.shareddomain.usecase.DeletePdfFileUseCaseContract
 import dev.seabat.cmp.pdfviewer.shareddomain.usecase.ReadPdfListUseCaseContract
 import dev.seabat.cmp.pdfviewer.shareddomain.usecase.SavePdfListUseCaseContract
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,8 @@ import kotlinx.coroutines.launch
 class TopViewModel(
     private val readPdfListUseCase: ReadPdfListUseCaseContract,
     private val savePdfListUseCase: SavePdfListUseCaseContract,
-    private val copyPdfFileUseCase: CopyPdfFileUseCaseContract
+    private val copyPdfFileUseCase: CopyPdfFileUseCaseContract,
+    private val deletePdfFileUseCase: DeletePdfFileUseCaseContract
 ) : ViewModel() {
 
     private val _pdfList = MutableStateFlow<List<PdfFile>>(emptyList())
@@ -39,6 +41,18 @@ class TopViewModel(
                     size = size,
                     filePath = filePath
                 )
+                _pdfList.value = newList
+                savePdfListUseCase(newList)
+            } catch (_: Exception) {
+            }
+        }
+    }
+
+    fun deletePdfFile(file: PdfFile) {
+        viewModelScope.launch {
+            try {
+                deletePdfFileUseCase(file.filePath)
+                val newList = _pdfList.value - file
                 _pdfList.value = newList
                 savePdfListUseCase(newList)
             } catch (_: Exception) {

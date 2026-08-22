@@ -33,4 +33,10 @@ actual class PdfFileDataSource actual constructor() : PdfFileDataSourceContract 
             data.writeToFile(destPath, atomically = true)
             destPath
         }
+
+    override suspend fun delete(filePath: String): Unit =
+        withContext(Dispatchers.Default) {
+            NSFileManager.defaultManager.removeItemAtPath(filePath, error = null)
+            Unit
+        }
 }
