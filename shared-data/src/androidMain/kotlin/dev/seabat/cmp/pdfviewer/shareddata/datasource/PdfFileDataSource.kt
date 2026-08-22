@@ -22,4 +22,10 @@ actual class PdfFileDataSource actual constructor() : PdfFileDataSourceContract 
             }
             destFile.absolutePath
         }
+
+    override suspend fun delete(filePath: String): Unit =
+        withContext(Dispatchers.IO) {
+            File(filePath).delete()
+            Unit
+        }
 }

@@ -8,4 +8,6 @@ class PdfFileRepository(
 ) : PdfFileRepositoryContract {
     override suspend fun copyToInternalStorage(sourceUri: String, destFileName: String): String =
         dataSource.copyToInternalStorage(sourceUri, destFileName)
+
+    override suspend fun delete(filePath: String) = dataSource.delete(filePath)
 }
