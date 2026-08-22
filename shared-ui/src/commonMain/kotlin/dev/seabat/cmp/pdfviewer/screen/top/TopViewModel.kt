@@ -45,4 +45,15 @@ class TopViewModel(
             }
         }
     }
+
+    fun deletePdfFile(file: PdfFile) {
+        viewModelScope.launch {
+            try {
+                val newList = _pdfList.value - file
+                _pdfList.value = newList
+                savePdfListUseCase(newList)
+            } catch (_: Exception) {
+            }
+        }
+    }
 }

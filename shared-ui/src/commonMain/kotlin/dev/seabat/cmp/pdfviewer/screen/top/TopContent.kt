@@ -3,6 +3,7 @@ package dev.seabat.cmp.pdfviewer.screen.top
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -12,12 +13,20 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
@@ -46,6 +55,7 @@ fun TopContent(
     TopContent(
         pdfList = pdfList,
         onNavigateToViewer = onNavigateToViewer,
+        onDeleteFile = viewModel::deletePdfFile,
         modifier = modifier
     )
 }
@@ -55,6 +65,7 @@ fun TopContent(
 private fun TopContent(
     pdfList: List<PdfFile>,
     onNavigateToViewer: (String) -> Unit,
+    onDeleteFile: (PdfFile) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -62,10 +73,11 @@ private fun TopContent(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(pdfList) { file ->
+        items(pdfList, key = { it.fileName }) { file ->
             PdfFileItem(
                 file = file,
-                onClick = { onNavigateToViewer(file.fileName) }
+                onClick = { onNavigateToViewer(file.fileName) },
+                onDelete = { onDeleteFile(file) }
             )
         }
     }
@@ -89,33 +101,63 @@ fun TopContentPreview() {
                 size = "3.4MB"
             )
         ),
-        onNavigateToViewer = {}
+        onNavigateToViewer = {},
+        onDeleteFile = {}
     )
 }
 
-/** PDF ファイル一覧の各アイテム */
+/** PDF ファイル一覧の各アイテム。右から左にスワイプすると [onDelete] を呼び出す */
 @Composable
-private fun PdfFileItem(file: PdfFile, onClick: () -> Unit) {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
+private fun PdfFileItem(file: PdfFile, onClick: () -> Unit, onDelete: () -> Unit) {
+    val dismissState = rememberSwipeToDismissBoxState()
+
+    SwipeToDismissBox(
+        state = dismissState,
+        enableDismissFromStartToEnd = false,
+        enableDismissFromEndToStart = true,
+        onDismiss = { direction ->
+            if (direction == SwipeToDismissBoxValue.EndToStart) {
+                onDelete()
+            }
+        },
+        backgroundContent = {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(CardDefaults.shape)
+                    .background(Color.Red)
+                    .padding(horizontal = 20.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "削除",
+                    tint = Color.White
+                )
+            }
+        }
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = file.displayName.ifEmpty { file.fileName },
-                style = MaterialTheme.typography.titleMedium
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "作成日時: ${file.createdAt}",
-                style = MaterialTheme.typography.bodySmall
-            )
-            Text(
-                text = "サイズ: ${file.size}",
-                style = MaterialTheme.typography.bodySmall
-            )
+        Card(
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = file.displayName.ifEmpty { file.fileName },
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "作成日時: ${file.createdAt}",
+                    style = MaterialTheme.typography.bodySmall
+                )
+                Text(
+                    text = "サイズ: ${file.size}",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
         }
     }
 }
