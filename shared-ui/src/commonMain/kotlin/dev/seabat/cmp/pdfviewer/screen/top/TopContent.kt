@@ -43,6 +43,20 @@ fun TopContent(
     val viewModel: TopViewModel = koinViewModel()
     val pdfList by viewModel.pdfList.collectAsStateWithLifecycle()
 
+    TopContent(
+        pdfList = pdfList,
+        onNavigateToViewer = onNavigateToViewer,
+        modifier = modifier
+    )
+}
+
+/** ViewModel に依存しない描画専用の実装（Preview から直接呼び出せる） */
+@Composable
+private fun TopContent(
+    pdfList: List<PdfFile>,
+    onNavigateToViewer: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(
         modifier = modifier.background(AppColors.contentContainer.toComposeColor()).fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
@@ -60,7 +74,23 @@ fun TopContent(
 @Preview
 @Composable
 fun TopContentPreview() {
-    TopContent(onNavigateToViewer = {})
+    TopContent(
+        pdfList = listOf(
+            PdfFile(
+                fileName = "sample1.pdf",
+                displayName = "サンプル1",
+                createdAt = "2026-08-01 10:00",
+                size = "1.2MB"
+            ),
+            PdfFile(
+                fileName = "sample2.pdf",
+                displayName = "サンプル2",
+                createdAt = "2026-08-10 15:30",
+                size = "3.4MB"
+            )
+        ),
+        onNavigateToViewer = {}
+    )
 }
 
 /** PDF ファイル一覧の各アイテム */

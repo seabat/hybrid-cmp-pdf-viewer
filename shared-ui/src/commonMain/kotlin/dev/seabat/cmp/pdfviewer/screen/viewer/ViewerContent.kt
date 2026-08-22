@@ -12,8 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.tooling.preview.Preview
+import dev.seabat.cmp.pdfviewer.di.initComposePreviewKoin
 import dev.seabat.cmp.pdfviewer.theme.AppColors
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.mp.KoinPlatform
 
 /**
  * ビューアページのコンテンツ (iOS と Android で共通)
@@ -51,5 +53,8 @@ fun ViewerContent(
 @Preview
 @Composable
 fun ViewerContentPreview() {
+    if (KoinPlatform.getKoinOrNull() == null) {
+        initComposePreviewKoin()
+    }
     ViewerContent(fileName = "sample.pdf")
 }
