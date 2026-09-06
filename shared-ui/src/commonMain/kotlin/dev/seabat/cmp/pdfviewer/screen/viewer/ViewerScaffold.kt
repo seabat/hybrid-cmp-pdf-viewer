@@ -1,5 +1,6 @@
 package dev.seabat.cmp.pdfviewer.screen.viewer
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -17,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 fun ViewerScaffold(fileName: String, onNavigateBack: () -> Unit) {
     Scaffold(
         containerColor = AppColors.contentContainer.toComposeColor(),  // 端末最下部のナビゲーションバーの背景
+        contentWindowInsets = WindowInsets(0),  // 画面最下部の Safe Area まで表示するためインセットを 0 にする
         topBar = {
             ViewerHeader(fileName = fileName, onNavigateBack = onNavigateBack)
         }

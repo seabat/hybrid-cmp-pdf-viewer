@@ -6,11 +6,13 @@ import SharedUI
 private struct TopHeaderComposeView: UIViewControllerRepresentable {
     var onNavigateToInformation: () -> Void
     var onAddPdf: () -> Void
+    var onSortTapped: () -> Void
 
     func makeUIViewController(context: Context) -> UIViewController {
         TopHeaderViewControllerKt.TopHeaderViewController(
             onNavigateToInformation: { onNavigateToInformation() },
-            onAddPdf: { onAddPdf() }
+            onAddPdf: { onAddPdf() },
+            onSortTapped: { onSortTapped() }
         )
     }
 
@@ -21,11 +23,13 @@ private struct TopHeaderComposeView: UIViewControllerRepresentable {
 private struct TopContentComposeView: UIViewControllerRepresentable {
     var onNavigateToViewer: (String) -> Void
     var pdfAddBridge: PdfAddBridge
+    var sortSheetBridge: SortSheetBridge
 
     func makeUIViewController(context: Context) -> UIViewController {
         TopContentViewControllerKt.TopContentViewController(
             onNavigateToViewer: { fileName in self.onNavigateToViewer(fileName) },
-            pdfAddBridge: pdfAddBridge
+            pdfAddBridge: pdfAddBridge,
+            sortSheetBridge: sortSheetBridge
         )
     }
 
@@ -38,12 +42,14 @@ struct TopScreen: View {
     @Binding var path: [Destination]
     @State private var showDocumentPicker = false
     @State private var pdfAddBridge = PdfAddBridge()
+    @State private var sortSheetBridge = SortSheetBridge()
 
     var body: some View {
         VStack(spacing: 0) {
             TopHeaderComposeView(
                 onNavigateToInformation: { path.append(.information) },
-                onAddPdf: { showDocumentPicker = true }
+                onAddPdf: { showDocumentPicker = true },
+                onSortTapped: { sortSheetBridge.open() }
             )
                 .frame(height: 64)
                 .background(
@@ -52,7 +58,8 @@ struct TopScreen: View {
                 )
             TopContentComposeView(
                 onNavigateToViewer: { fileName in path.append(.viewer(fileName: fileName)) },
-                pdfAddBridge: pdfAddBridge
+                pdfAddBridge: pdfAddBridge,
+                sortSheetBridge: sortSheetBridge
             )
             .background(
                 // TopContent の背景色（contentContainer）をナビゲーションバー領域へ拡張

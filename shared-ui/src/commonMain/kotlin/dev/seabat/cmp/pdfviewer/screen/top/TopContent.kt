@@ -6,22 +6,29 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -51,11 +58,19 @@ fun TopContent(
 ) {
     val viewModel: TopViewModel = koinViewModel()
     val pdfList by viewModel.pdfList.collectAsStateWithLifecycle()
+    val isSortSheetVisible by viewModel.isSortSheetVisible.collectAsStateWithLifecycle()
+    val sortField by viewModel.sortField.collectAsStateWithLifecycle()
+    val sortOrder by viewModel.sortOrder.collectAsStateWithLifecycle()
 
     TopContent(
         pdfList = pdfList,
         onNavigateToViewer = onNavigateToViewer,
         onDeleteFile = viewModel::deletePdfFile,
+        isSortSheetVisible = isSortSheetVisible,
+        sortField = sortField,
+        sortOrder = sortOrder,
+        onSortOptionSelected = viewModel::selectSortOption,
+        onDismissSortSheet = viewModel::dismissSortSheet,
         modifier = modifier
     )
 }
@@ -66,18 +81,34 @@ private fun TopContent(
     pdfList: List<PdfFile>,
     onNavigateToViewer: (String) -> Unit,
     onDeleteFile: (PdfFile) -> Unit,
+    isSortSheetVisible: Boolean = false,
+    sortField: SortField = SortField.DATE,
+    sortOrder: SortOrder = SortOrder.DESC,
+    onSortOptionSelected: (SortField, SortOrder) -> Unit = { _, _ -> },
+    onDismissSortSheet: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
-        modifier = modifier.background(AppColors.contentContainer.toComposeColor()).fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(pdfList, key = { it.fileName }) { file ->
-            PdfFileItem(
-                file = file,
-                onClick = { onNavigateToViewer(file.fileName) },
-                onDelete = { onDeleteFile(file) }
+    Box(modifier = modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier.background(AppColors.contentContainer.toComposeColor()).fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(pdfList, key = { it.fileName }) { file ->
+                PdfFileItem(
+                    file = file,
+                    onClick = { onNavigateToViewer(file.fileName) },
+                    onDelete = { onDeleteFile(file) }
+                )
+            }
+        }
+
+        if (isSortSheetVisible) {
+            SortBottomSheet(
+                sortField = sortField,
+                sortOrder = sortOrder,
+                onSortOptionSelected = onSortOptionSelected,
+                onDismissRequest = onDismissSortSheet
             )
         }
     }
@@ -104,6 +135,68 @@ fun TopContentPreview() {
         onNavigateToViewer = {},
         onDeleteFile = {}
     )
+}
+
+/** 並び替え設定用のボトムシート。項目（日付/ファイル名）と向き（昇順/降順）を選択するとすぐに適用される */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SortBottomSheet(
+    sortField: SortField,
+    sortOrder: SortOrder,
+    onSortOptionSelected: (SortField, SortOrder) -> Unit,
+    onDismissRequest: () -> Unit
+) {
+    ModalBottomSheet(
+        onDismissRequest = onDismissRequest,
+        sheetState = rememberModalBottomSheetState()
+    ) {
+        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+            Text(text = "並び替え", style = MaterialTheme.typography.titleMedium)
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(text = "項目", style = MaterialTheme.typography.labelLarge)
+            SortOptionRow(
+                label = "日付",
+                selected = sortField == SortField.DATE,
+                onClick = { onSortOptionSelected(SortField.DATE, sortOrder) }
+            )
+            SortOptionRow(
+                label = "ファイル名",
+                selected = sortField == SortField.NAME,
+                onClick = { onSortOptionSelected(SortField.NAME, sortOrder) }
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(text = "順番", style = MaterialTheme.typography.labelLarge)
+            SortOptionRow(
+                label = "昇順",
+                selected = sortOrder == SortOrder.ASC,
+                onClick = { onSortOptionSelected(sortField, SortOrder.ASC) }
+            )
+            SortOptionRow(
+                label = "降順",
+                selected = sortOrder == SortOrder.DESC,
+                onClick = { onSortOptionSelected(sortField, SortOrder.DESC) }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+}
+
+@Composable
+private fun SortOptionRow(label: String, selected: Boolean, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .selectable(selected = selected, onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        RadioButton(selected = selected, onClick = onClick)
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(text = label)
+    }
 }
 
 /** PDF ファイル一覧の各アイテム。右から左にスワイプすると [onDelete] を呼び出す */

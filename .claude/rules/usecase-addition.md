@@ -4,7 +4,7 @@
 参考: https://developer.android.com/topic/architecture
 
 ```
-UI Layer       composeApp
+UI Layer       shared-ui
 Domain Layer   shared-domain
 Data Layer     shared-data
 ```

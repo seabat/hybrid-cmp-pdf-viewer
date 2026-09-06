@@ -12,10 +12,12 @@ import org.koin.compose.viewmodel.koinViewModel
  *
  * @param onNavigateToViewer ファイルをタップしたときに呼ばれるコールバック（引数: ファイル名）
  * @param pdfAddBridge Swift のドキュメントピッカーと Kotlin ViewModel を橋渡しするオブジェクト
+ * @param sortSheetBridge TopHeader の並び替えボタンと Kotlin ViewModel を橋渡しするオブジェクト
  */
 fun TopContentViewController(
     onNavigateToViewer: (String) -> Unit,
-    pdfAddBridge: PdfAddBridge
+    pdfAddBridge: PdfAddBridge,
+    sortSheetBridge: SortSheetBridge
 ) = ComposeUIViewController {
     val viewModel: TopViewModel = koinViewModel()
 
@@ -23,8 +25,12 @@ fun TopContentViewController(
         pdfAddBridge.onAdd = { sourceUrl, name, createdAt, size ->
             viewModel.addPdfFile(sourceUri = sourceUrl, name = name, createdAt = createdAt, size = size)
         }
+        sortSheetBridge.onOpen = {
+            viewModel.showSortSheet()
+        }
         onDispose {
             pdfAddBridge.onAdd = null
+            sortSheetBridge.onOpen = null
         }
     }
 

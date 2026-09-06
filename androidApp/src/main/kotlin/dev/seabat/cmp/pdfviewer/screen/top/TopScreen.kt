@@ -65,7 +65,8 @@ fun TopScreen(onNavigateToViewer: (String) -> Unit, onNavigateToInformation: () 
         topBar = {
             TopHeader(
                 onNavigateToInformation = onNavigateToInformation,
-                onAddPdf = { pdfPickerLauncher.launch(arrayOf("application/pdf")) }
+                onAddPdf = { pdfPickerLauncher.launch(arrayOf("application/pdf")) },
+                onSortTapped = viewModel::showSortSheet
             )
         }
     ) { padding ->
