@@ -39,6 +39,9 @@ class TopViewModel(
     private val _sortOrder = MutableStateFlow(SortOrder.DESC)
     val sortOrder: StateFlow<SortOrder> = _sortOrder.asStateFlow()
 
+    private val _isSortSheetVisible = MutableStateFlow(false)
+    val isSortSheetVisible: StateFlow<Boolean> = _isSortSheetVisible.asStateFlow()
+
     private val _pdfList = MutableStateFlow<List<PdfFile>>(emptyList())
     val pdfList: StateFlow<List<PdfFile>> = _pdfList.asStateFlow()
 
@@ -83,10 +86,19 @@ class TopViewModel(
         }
     }
 
-    fun onSortOptionSelected(field: SortField, order: SortOrder) {
+    fun showSortSheet() {
+        _isSortSheetVisible.value = true
+    }
+
+    fun dismissSortSheet() {
+        _isSortSheetVisible.value = false
+    }
+
+    fun selectSortOption(field: SortField, order: SortOrder) {
         _sortField.value = field
         _sortOrder.value = order
         applySort()
+        _isSortSheetVisible.value = false
     }
 
     private fun applySort() {

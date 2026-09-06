@@ -11,6 +11,8 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TopViewModelTest {
@@ -54,14 +56,14 @@ class TopViewModelTest {
     @Test
     fun testSortByDateAscending() = runTest {
         val viewModel = createViewModel(listOf(oldJpgLike, newFile))
-        viewModel.onSortOptionSelected(SortField.DATE, SortOrder.ASC)
+        viewModel.selectSortOption(SortField.DATE, SortOrder.ASC)
         assertEquals(listOf(oldJpgLike, newFile), viewModel.pdfList.value)
     }
 
     @Test
     fun testSortByNameAscending() = runTest {
         val viewModel = createViewModel(listOf(oldJpgLike, newFile))
-        viewModel.onSortOptionSelected(SortField.NAME, SortOrder.ASC)
+        viewModel.selectSortOption(SortField.NAME, SortOrder.ASC)
         // Apple, Banana
         assertEquals(listOf(newFile, oldJpgLike), viewModel.pdfList.value)
     }
@@ -69,8 +71,28 @@ class TopViewModelTest {
     @Test
     fun testSortByNameDescending() = runTest {
         val viewModel = createViewModel(listOf(oldJpgLike, newFile))
-        viewModel.onSortOptionSelected(SortField.NAME, SortOrder.DESC)
+        viewModel.selectSortOption(SortField.NAME, SortOrder.DESC)
         // Banana, Apple
         assertEquals(listOf(oldJpgLike, newFile), viewModel.pdfList.value)
+    }
+
+    @Test
+    fun testSortSheetVisibility() = runTest {
+        val viewModel = createViewModel(emptyList())
+        assertFalse(viewModel.isSortSheetVisible.value)
+
+        viewModel.showSortSheet()
+        assertTrue(viewModel.isSortSheetVisible.value)
+
+        viewModel.dismissSortSheet()
+        assertFalse(viewModel.isSortSheetVisible.value)
+    }
+
+    @Test
+    fun testSortSheetClosesAfterOptionSelected() = runTest {
+        val viewModel = createViewModel(emptyList())
+        viewModel.showSortSheet()
+        viewModel.selectSortOption(SortField.DATE, SortOrder.ASC)
+        assertFalse(viewModel.isSortSheetVisible.value)
     }
 }

@@ -41,7 +41,6 @@ private struct TopContentComposeView: UIViewControllerRepresentable {
 struct TopScreen: View {
     @Binding var path: [Destination]
     @State private var showDocumentPicker = false
-    @State private var showSortSheet = false
     @State private var pdfAddBridge = PdfAddBridge()
     @State private var sortSheetBridge = SortSheetBridge()
 
@@ -50,7 +49,7 @@ struct TopScreen: View {
             TopHeaderComposeView(
                 onNavigateToInformation: { path.append(.information) },
                 onAddPdf: { showDocumentPicker = true },
-                onSortTapped: { showSortSheet = true }
+                onSortTapped: { sortSheetBridge.open() }
             )
                 .frame(height: 64)
                 .background(
@@ -71,10 +70,6 @@ struct TopScreen: View {
             DocumentPickerView { sourceUrl, name, createdAt, size in
                 pdfAddBridge.add(sourceUrl: sourceUrl, name: name, createdAt: createdAt, size: size)
             }
-        }
-        .sheet(isPresented: $showSortSheet) {
-            SortOptionsView(sortSheetBridge: sortSheetBridge)
-                .presentationDetents([.medium])
         }
     }
 }
