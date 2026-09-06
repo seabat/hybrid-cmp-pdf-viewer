@@ -10,11 +10,13 @@ import dev.seabat.cmp.pdfviewer.screen.top.TopHeader
  */
 fun TopHeaderViewController(
     onNavigateToInformation: () -> Unit,
-    onAddPdf: () -> Unit = {}
+    onAddPdf: () -> Unit = {},
+    onSortTapped: () -> Unit = {}
 ) = ComposeUIViewController {
     TopHeader(
         onNavigateToInformation = onNavigateToInformation,
         onAddPdf = onAddPdf,
+        onSortTapped = onSortTapped,
         // CMP 1.11.x 以降、ComposeUIViewController 内で TopAppBar がステータスバー分の
         // 上インセットを自動適用するため、iOS の frame(height: 64) 枠外へ押し出されないよう 0 に上書き
         windowInsets = WindowInsets(0)

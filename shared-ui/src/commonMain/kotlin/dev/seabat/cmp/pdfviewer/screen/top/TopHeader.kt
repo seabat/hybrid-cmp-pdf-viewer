@@ -1,6 +1,7 @@
 package dev.seabat.cmp.pdfviewer.screen.top
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.foundation.layout.WindowInsets
@@ -22,6 +23,7 @@ import org.jetbrains.compose.resources.stringResource
 fun TopHeader(
     onNavigateToInformation: () -> Unit,
     onAddPdf: () -> Unit = {},
+    onSortTapped: () -> Unit = {},
     windowInsets: WindowInsets = TopAppBarDefaults.windowInsets
 ) {
     TopAppBar(
@@ -33,6 +35,12 @@ fun TopHeader(
         ),
         title = { Text("PDF ビューア") },
         actions = {
+            IconButton(onClick = onSortTapped) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.Sort,
+                    contentDescription = "並び替え"
+                )
+            }
             IconButton(onClick = onAddPdf) {
                 Icon(
                     imageVector = Icons.Default.Add,
