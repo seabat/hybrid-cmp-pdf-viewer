@@ -53,8 +53,9 @@ struct TopScreen: View {
             )
                 .frame(height: 64)
                 .background(
-                    // TopHeader の TopAppBar と同じ色をステータスバー領域へ拡張
-                    Color(AppColors.shared.headerContainer).ignoresSafeArea(edges: .top)
+                    // TopHeader の TopAppBar と同じ色をステータスバー領域と
+                    // 横向き時の左右のセーフエリアへ拡張する
+                    Color(AppColors.shared.headerContainer).ignoresSafeArea(edges: [.top, .horizontal])
                 )
             TopContentComposeView(
                 onNavigateToViewer: { fileName in path.append(.viewer(fileName: fileName)) },
@@ -62,8 +63,9 @@ struct TopScreen: View {
                 sortSheetBridge: sortSheetBridge
             )
             .background(
-                // TopContent の背景色（contentContainer）をナビゲーションバー領域へ拡張
-                Color(AppColors.shared.contentContainer).ignoresSafeArea(edges: .bottom)
+                // TopContent の背景色（contentContainer）をナビゲーションバー領域と
+                // 横向き時の左右のセーフエリアへ拡張する
+                Color(AppColors.shared.contentContainer).ignoresSafeArea(edges: [.bottom, .horizontal])
             )
         }
         .sheet(isPresented: $showDocumentPicker) {
