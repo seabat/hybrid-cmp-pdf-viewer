@@ -199,6 +199,16 @@ private fun SortOptionRow(label: String, selected: Boolean, onClick: () -> Unit)
     }
 }
 
+@Preview
+@Composable
+fun SortOptionRowPreview() {
+    // 選択済み / 未選択の両方を並べて確認する
+    Column {
+        SortOptionRow(label = "日付", selected = true, onClick = {})
+        SortOptionRow(label = "ファイル名", selected = false, onClick = {})
+    }
+}
+
 /** PDF ファイル一覧の各アイテム。右から左にスワイプすると [onDelete] を呼び出す */
 @Composable
 private fun PdfFileItem(file: PdfFile, onClick: () -> Unit, onDelete: () -> Unit) {
@@ -214,19 +224,24 @@ private fun PdfFileItem(file: PdfFile, onClick: () -> Unit, onDelete: () -> Unit
             }
         },
         backgroundContent = {
+            // SwipeToDismissBox は背景を常に描画するため、スワイプ中以外は何も描画しない。
+            // これによりカードの背後から赤が覗くのを防ぐ（Preview の初回描画で露出する問題の対策）
+            val isSwiping = dismissState.dismissDirection == SwipeToDismissBoxValue.EndToStart
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(CardDefaults.shape)
-                    .background(Color.Red)
+                    .background(if (isSwiping) Color.Red else Color.Transparent)
                     .padding(horizontal = 20.dp),
                 contentAlignment = Alignment.CenterEnd
             ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "削除",
-                    tint = Color.White
-                )
+                if (isSwiping) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "削除",
+                        tint = Color.White
+                    )
+                }
             }
         }
     ) {
@@ -252,5 +267,27 @@ private fun PdfFileItem(file: PdfFile, onClick: () -> Unit, onDelete: () -> Unit
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun PdfFileItemPreview() {
+    // 一覧と同じグレー背景の上に配置し、白いカードの境界が分かるようにする
+    Box(
+        modifier = Modifier
+            .background(AppColors.contentContainer.toComposeColor())
+            .padding(16.dp)
+    ) {
+        PdfFileItem(
+            file = PdfFile(
+                fileName = "sample1.pdf",
+                displayName = "サンプル1",
+                createdAt = "2026-08-01 10:00",
+                size = "1.2MB"
+            ),
+            onClick = {},
+            onDelete = {}
+        )
     }
 }
