@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -16,8 +17,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -97,18 +99,26 @@ private fun TopContent(
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier.fillMaxSize()) {
-        LazyColumn(
-            modifier = Modifier.background(AppColors.contentContainer.toComposeColor()).fillMaxSize(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+        BoxWithConstraints(
+            modifier = Modifier.background(AppColors.contentContainer.toComposeColor()).fillMaxSize()
         ) {
-            items(pdfList, key = { it.fileName }) { file ->
-                PdfFileItem(
-                    file = file,
-                    thumbnail = thumbnails[file.fileName],
-                    onClick = { onNavigateToViewer(file.fileName) },
-                    onDelete = { onDeleteFile(file) }
-                )
+            // 幅が広い場合（横向きやタブレット）は 2 列で表示する
+            val columns = if (maxWidth >= GRID_BREAKPOINT) 2 else 1
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(columns),
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(pdfList, key = { it.fileName }) { file ->
+                    PdfFileItem(
+                        file = file,
+                        thumbnail = thumbnails[file.fileName],
+                        onClick = { onNavigateToViewer(file.fileName) },
+                        onDelete = { onDeleteFile(file) }
+                    )
+                }
             }
         }
 
@@ -127,24 +137,37 @@ private fun TopContent(
 @Composable
 fun TopContentPreview() {
     TopContent(
-        pdfList = listOf(
-            PdfFile(
-                fileName = "sample1.pdf",
-                displayName = "サンプル1",
-                createdAt = "2026-08-01 10:00",
-                size = "1.2MB"
-            ),
-            PdfFile(
-                fileName = "sample2.pdf",
-                displayName = "サンプル2",
-                createdAt = "2026-08-10 15:30",
-                size = "3.4MB"
-            )
-        ),
+        pdfList = previewPdfList(),
         onNavigateToViewer = {},
         onDeleteFile = {}
     )
 }
+
+/** 幅が広い場合に 2 列になることを確認する Preview */
+@Preview(widthDp = 800, heightDp = 400)
+@Composable
+fun TopContentWidePreview() {
+    TopContent(
+        pdfList = previewPdfList(),
+        onNavigateToViewer = {},
+        onDeleteFile = {}
+    )
+}
+
+private fun previewPdfList(): List<PdfFile> = listOf(
+    PdfFile(
+        fileName = "sample1.pdf",
+        displayName = "サンプル1",
+        createdAt = "2026-08-01 10:00",
+        size = "1.2MB"
+    ),
+    PdfFile(
+        fileName = "sample2.pdf",
+        displayName = "サンプル2",
+        createdAt = "2026-08-10 15:30",
+        size = "3.4MB"
+    )
+)
 
 /** 並び替え設定用のボトムシート。項目（日付/ファイル名）と向き（昇順/降順）を選択するとすぐに適用される */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -318,6 +341,9 @@ private fun PdfThumbnail(thumbnail: ImageBitmap?) {
 
 private val THUMBNAIL_WIDTH = 48.dp
 private val THUMBNAIL_HEIGHT = 64.dp
+
+/** この幅以上で一覧を 2 列にする。Material のレスポンシブ指針の medium 幅に合わせている */
+private val GRID_BREAKPOINT = 600.dp
 
 @Preview
 @Composable
