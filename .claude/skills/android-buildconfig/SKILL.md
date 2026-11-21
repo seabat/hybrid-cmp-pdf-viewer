@@ -1,3 +1,8 @@
+---
+name: android-buildconfig
+description: Android Library モジュール（shared-data 等）で BuildConfig を使うときの設定手順。build.gradle.kts の buildFeatures { buildConfig = true } と buildConfigField の書き方、namespace に対応した import パス、Android Library では defaultConfig の versionName が使えない制約。「BuildConfig を使いたい」「ビルド時の定数を追加」のときに使う。
+---
+
 # Android BuildConfig ルール
 
 Android Library モジュール（`shared-data` 等）で `BuildConfig` を使う際の手順。

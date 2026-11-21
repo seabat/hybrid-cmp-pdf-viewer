@@ -1,3 +1,8 @@
+---
+name: screen-addition
+description: 新しい画面を追加・変更するときの構成ルール。方法A/B/C の選び方、commonMain / androidMain / iosMain / Swift のファイル配置と命名、NavigationApp.kt と NavigationView.swift のナビゲーション更新、skydoves NavGraph アノテーションの付与手順。「画面を追加」「Screen を作る」「新しい画面」「画面遷移を追加」のときに使う。
+---
+
 # 画面追加ルール
 
 画面構成には **方法A**・**方法B**・**方法C** の3種類がある。
