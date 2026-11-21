@@ -8,6 +8,8 @@ import dev.seabat.cmp.pdfviewer.shareddomain.usecase.DeletePdfFileUseCase
 import dev.seabat.cmp.pdfviewer.shareddomain.usecase.DeletePdfFileUseCaseContract
 import dev.seabat.cmp.pdfviewer.shareddomain.usecase.FindPdfFileByNameUseCase
 import dev.seabat.cmp.pdfviewer.shareddomain.usecase.FindPdfFileByNameUseCaseContract
+import dev.seabat.cmp.pdfviewer.shareddomain.usecase.RenderPdfThumbnailUseCase
+import dev.seabat.cmp.pdfviewer.shareddomain.usecase.RenderPdfThumbnailUseCaseContract
 import dev.seabat.cmp.pdfviewer.shareddomain.usecase.ReadPdfListUseCase
 import dev.seabat.cmp.pdfviewer.shareddomain.usecase.ReadPdfListUseCaseContract
 import dev.seabat.cmp.pdfviewer.shareddomain.usecase.SavePdfListUseCase
@@ -22,4 +24,5 @@ val useCaseModule = module {
     single<CopyPdfFileUseCaseContract> { CopyPdfFileUseCase(get()) }
     single<DeletePdfFileUseCaseContract> { DeletePdfFileUseCase(get()) }
     single<FindPdfFileByNameUseCaseContract> { FindPdfFileByNameUseCase(get()) }
+    single<RenderPdfThumbnailUseCaseContract> { RenderPdfThumbnailUseCase(get()) }
 }

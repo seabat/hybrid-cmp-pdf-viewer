@@ -1,6 +1,8 @@
 package dev.seabat.cmp.pdfviewer.screen.top
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -35,6 +38,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -61,9 +66,11 @@ fun TopContent(
     val isSortSheetVisible by viewModel.isSortSheetVisible.collectAsStateWithLifecycle()
     val sortField by viewModel.sortField.collectAsStateWithLifecycle()
     val sortOrder by viewModel.sortOrder.collectAsStateWithLifecycle()
+    val thumbnails by viewModel.thumbnails.collectAsStateWithLifecycle()
 
     TopContent(
         pdfList = pdfList,
+        thumbnails = thumbnails,
         onNavigateToViewer = onNavigateToViewer,
         onDeleteFile = viewModel::deletePdfFile,
         isSortSheetVisible = isSortSheetVisible,
@@ -79,6 +86,7 @@ fun TopContent(
 @Composable
 private fun TopContent(
     pdfList: List<PdfFile>,
+    thumbnails: Map<String, ImageBitmap> = emptyMap(),
     onNavigateToViewer: (String) -> Unit,
     onDeleteFile: (PdfFile) -> Unit,
     isSortSheetVisible: Boolean = false,
@@ -97,6 +105,7 @@ private fun TopContent(
             items(pdfList, key = { it.fileName }) { file ->
                 PdfFileItem(
                     file = file,
+                    thumbnail = thumbnails[file.fileName],
                     onClick = { onNavigateToViewer(file.fileName) },
                     onDelete = { onDeleteFile(file) }
                 )
@@ -209,9 +218,18 @@ fun SortOptionRowPreview() {
     }
 }
 
-/** PDF ファイル一覧の各アイテム。右から左にスワイプすると [onDelete] を呼び出す */
+/**
+ * PDF ファイル一覧の各アイテム。右から左にスワイプすると [onDelete] を呼び出す
+ *
+ * @param thumbnail 1 ページ目のサムネイル。生成前・生成失敗時は null
+ */
 @Composable
-private fun PdfFileItem(file: PdfFile, onClick: () -> Unit, onDelete: () -> Unit) {
+private fun PdfFileItem(
+    file: PdfFile,
+    thumbnail: ImageBitmap?,
+    onClick: () -> Unit,
+    onDelete: () -> Unit
+) {
     val dismissState = rememberSwipeToDismissBoxState()
 
     SwipeToDismissBox(
@@ -251,24 +269,55 @@ private fun PdfFileItem(file: PdfFile, onClick: () -> Unit, onDelete: () -> Unit
                 .fillMaxWidth()
                 .clickable(onClick = onClick)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = file.displayName.ifEmpty { file.fileName },
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "作成日時: ${file.createdAt}",
-                    style = MaterialTheme.typography.bodySmall
-                )
-                Text(
-                    text = "サイズ: ${file.size}",
-                    style = MaterialTheme.typography.bodySmall
-                )
+            Row(
+                modifier = Modifier.padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = file.displayName.ifEmpty { file.fileName },
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "作成日時: ${file.createdAt}",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                    Text(
+                        text = "サイズ: ${file.size}",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                PdfThumbnail(thumbnail = thumbnail)
             }
         }
     }
 }
+
+/** 1 ページ目のサムネイル。生成前・生成失敗時は白い枠のみを表示する */
+@Composable
+private fun PdfThumbnail(thumbnail: ImageBitmap?) {
+    Box(
+        modifier = Modifier
+            .size(width = THUMBNAIL_WIDTH, height = THUMBNAIL_HEIGHT)
+            .background(Color.White)
+            .border(width = 1.dp, color = Color.LightGray),
+        contentAlignment = Alignment.Center
+    ) {
+        if (thumbnail != null) {
+            Image(
+                bitmap = thumbnail,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Fit
+            )
+        }
+    }
+}
+
+private val THUMBNAIL_WIDTH = 48.dp
+private val THUMBNAIL_HEIGHT = 64.dp
 
 @Preview
 @Composable
@@ -280,6 +329,7 @@ fun PdfFileItemPreview() {
             .padding(16.dp)
     ) {
         PdfFileItem(
+            thumbnail = null,
             file = PdfFile(
                 fileName = "sample1.pdf",
                 displayName = "サンプル1",

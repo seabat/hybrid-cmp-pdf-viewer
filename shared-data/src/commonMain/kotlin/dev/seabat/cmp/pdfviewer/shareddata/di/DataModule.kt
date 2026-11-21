@@ -6,15 +6,19 @@ import dev.seabat.cmp.pdfviewer.shareddata.datasource.PdfFileDataSource
 import dev.seabat.cmp.pdfviewer.shareddata.datasource.PdfFileDataSourceContract
 import dev.seabat.cmp.pdfviewer.shareddata.datasource.PdfListDataSource
 import dev.seabat.cmp.pdfviewer.shareddata.datasource.PdfListDataSourceContract
+import dev.seabat.cmp.pdfviewer.shareddata.datasource.PdfThumbnailDataSource
+import dev.seabat.cmp.pdfviewer.shareddata.datasource.PdfThumbnailDataSourceContract
 import dev.seabat.cmp.pdfviewer.shareddata.datasource.PlatformInfoDataSource
 import dev.seabat.cmp.pdfviewer.shareddata.datasource.PlatformInfoDataSourceContract
 import dev.seabat.cmp.pdfviewer.shareddata.repository.AppInfoRepository
 import dev.seabat.cmp.pdfviewer.shareddata.repository.PdfFileRepository
 import dev.seabat.cmp.pdfviewer.shareddata.repository.PdfListRepository
+import dev.seabat.cmp.pdfviewer.shareddata.repository.PdfThumbnailRepository
 import dev.seabat.cmp.pdfviewer.shareddata.repository.PlatformRepository
 import dev.seabat.cmp.pdfviewer.shareddomain.repository.AppInfoRepositoryContract
 import dev.seabat.cmp.pdfviewer.shareddomain.repository.PdfFileRepositoryContract
 import dev.seabat.cmp.pdfviewer.shareddomain.repository.PdfListRepositoryContract
+import dev.seabat.cmp.pdfviewer.shareddomain.repository.PdfThumbnailRepositoryContract
 import dev.seabat.cmp.pdfviewer.shareddomain.repository.PlatformRepositoryContract
 import org.koin.dsl.module
 
@@ -24,6 +28,7 @@ val repositoryModule = module {
     single<AppInfoRepositoryContract> { AppInfoRepository(get()) }
     single<PdfListRepositoryContract> { PdfListRepository(get()) }
     single<PdfFileRepositoryContract> { PdfFileRepository(get()) }
+    single<PdfThumbnailRepositoryContract> { PdfThumbnailRepository(get()) }
 }
 
 val dataSourceModule = module {
@@ -31,4 +36,5 @@ val dataSourceModule = module {
     single<AppInfoDataSourceContract> { AppInfoDataSource() }
     single<PdfListDataSourceContract> { PdfListDataSource() }
     single<PdfFileDataSourceContract> { PdfFileDataSource() }
+    single<PdfThumbnailDataSourceContract> { PdfThumbnailDataSource() }
 }

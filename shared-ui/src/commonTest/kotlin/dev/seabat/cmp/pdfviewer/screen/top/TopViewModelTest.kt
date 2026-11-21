@@ -44,7 +44,8 @@ class TopViewModelTest {
         readPdfListUseCase = FakeReadPdfListUseCase(initialList),
         savePdfListUseCase = FakeSavePdfListUseCase(),
         copyPdfFileUseCase = FakeCopyPdfFileUseCase(),
-        deletePdfFileUseCase = FakeDeletePdfFileUseCase()
+        deletePdfFileUseCase = FakeDeletePdfFileUseCase(),
+        renderPdfThumbnailUseCase = FakeRenderPdfThumbnailUseCase()
     )
 
     @Test
