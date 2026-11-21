@@ -1,3 +1,8 @@
+---
+name: dialog-addition
+description: ダイアログ・アラートを追加するときのルール。commonMain の CMP AlertDialog は使わず、Android は androidMain の Jetpack Compose AlertDialog、iOS は Kotlin から Swift へコールバックを渡して SwiftUI の .alert を表示する。変更ファイルの手順とコールバックの命名規約（onXxxTapped / onShowXxxAlert / onShowAlert）。「ダイアログを出す」「アラートを表示」「確認ダイアログを追加」のときに使う。
+---
+
 # ダイアログ追加ルール
 
 Android と iOS それぞれのフレームワーク標準ダイアログを表示する方法。

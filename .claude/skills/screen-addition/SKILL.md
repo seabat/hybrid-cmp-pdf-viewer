@@ -1,3 +1,8 @@
+---
+name: screen-addition
+description: 新しい画面を追加・変更するときの構成ルール。方法A/B/C の選び方、commonMain / androidMain / iosMain / Swift のファイル配置と命名、NavigationApp.kt と NavigationView.swift のナビゲーション更新、skydoves NavGraph アノテーションの付与手順。「画面を追加」「Screen を作る」「新しい画面」「画面遷移を追加」のときに使う。
+---
+
 # 画面追加ルール
 
 画面構成には **方法A**・**方法B**・**方法C** の3種類がある。
@@ -45,8 +50,11 @@ iosApp/Screen/
 ```
 
 - SwiftUI の `VStack(spacing: 0)` で Header + Content を並べる
-- Header は `.frame(height: 64)` + `.background(...ignoresSafeArea(edges: .top))`
-- Content は `.background(...ignoresSafeArea(edges: .bottom))`
+- Header は `.frame(height: 64)` + `.background(...ignoresSafeArea(edges: [.top, .horizontal]))`
+- Content は `.background(...ignoresSafeArea(edges: [.bottom, .horizontal]))`
+- `edges` に **`.horizontal` を必ず含める**。`ignoresSafeArea` は指定した辺にしか効かないため、
+  `.top` / `.bottom` だけだと横向き時に左右のセーフエリアが白く残る（縦向きでは表面化しない）。
+  背景だけを広げる形にすることで、タイトルやコンテンツはセーフエリア内に留まりノッチに隠れない。
 - `.navigationBarHidden(true)` は不要（SwiftUI が SafeArea を管理）
 
 ---

@@ -57,7 +57,12 @@ hybrid-cmp-pdf-viewer/
 
 ## Rules
 
-@.claude/rules/screen-addition.md
-@.claude/rules/usecase-addition.md
-@.claude/rules/android-buildconfig.md
-@.claude/rules/dialog-addition.md
+実装ルールは `.claude/skills/` 配下の Skill として管理している（コンテキスト節約のため、必要な
+ときだけ読み込まれる）。以下の作業を行う場合は、**着手前に必ず対応する Skill を呼び出す**。
+
+| 作業内容 | Skill |
+|---|---|
+| 画面の追加・変更（方法A/B/C、ナビゲーション更新、NavGraph アノテーション） | `/screen-addition` |
+| ユースケース / リポジトリ / データソースの追加（Koin 登録を含む） | `/usecase-addition` |
+| ダイアログ・アラートの追加 | `/dialog-addition` |
+| Android Library モジュールでの BuildConfig 利用 | `/android-buildconfig` |

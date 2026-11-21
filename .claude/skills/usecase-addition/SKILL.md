@@ -1,3 +1,8 @@
+---
+name: usecase-addition
+description: ユースケース・リポジトリ・データソースを追加するときのクリーンアーキテクチャ構成ルール。shared-domain / shared-data のどこに何を置くか、シナリオ1〜4 別の追加ファイルセット、Koin モジュール（DomainModule.kt / DataModule.kt）への登録、命名規約（Contract / UseCase / Repository / DataSource）、expect/actual パターン、テスト用 Fake の作り方。「UseCase を追加」「リポジトリを追加」「データソースを追加」「ビジネスロジックを追加」のときに使う。
+---
+
 # ユースケース追加ルール
 
 本プロジェクトは UI Layer - Domain Layer - Data Layer のクリーンアーキテクチャを採用している。
