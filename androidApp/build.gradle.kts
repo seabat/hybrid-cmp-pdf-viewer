@@ -61,6 +61,8 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.biometric)
     implementation(libs.androidx.navigation.compose)
+    // TopScreen で ViewModel の StateFlow を参照するため明示的に依存する
+    implementation(libs.kotlinx.coroutines.core)
     implementation(compose.material3)
     implementation(compose.components.resources)
     implementation(platform(libs.koin.bom))

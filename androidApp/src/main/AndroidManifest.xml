@@ -11,13 +11,39 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        <!--
+            launchMode="singleTask":
+            他アプリ（ブラウザ・ファイルアプリ等）から PDF を渡されたとき、呼び出し元のタスク内に
+            本アプリの Activity が二重に生成されるのを防ぎ、既存のインスタンスの onNewIntent で受け取る
+        -->
         <activity
             android:exported="true"
+            android:launchMode="singleTask"
             android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- 他アプリの「アプリで開く」から PDF を受け取る -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="application/pdf" android:scheme="content" />
+                <data android:mimeType="application/pdf" android:scheme="file" />
+            </intent-filter>
+
+            <!-- 共有シートから PDF を受け取る -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/pdf" />
             </intent-filter>
         </activity>
     </application>

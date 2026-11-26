@@ -40,6 +40,13 @@ private struct TopContentComposeView: UIViewControllerRepresentable {
 /// View プロトコルを実装した SwiftUI コンポーネント
 struct TopScreen: View {
     @Binding var path: [Destination]
+    /// 他アプリから渡された PDF の URL。取り込みが済んだら nil に戻す
+    @Binding var openedPdfUrl: URL?
+
+    /// 共有で復帰する途中（inactive）に画面遷移すると NavigationStack の状態がずれるため、
+    /// アクティブになるのを待って取り込む
+    @Environment(\.scenePhase) private var scenePhase
+
     @State private var showDocumentPicker = false
     @State private var pdfAddBridge = PdfAddBridge()
     @State private var sortSheetBridge = SortSheetBridge()
@@ -69,9 +76,44 @@ struct TopScreen: View {
             )
         }
         .sheet(isPresented: $showDocumentPicker) {
-            DocumentPickerView { sourceUrl, name, createdAt, size in
-                pdfAddBridge.add(sourceUrl: sourceUrl, name: name, createdAt: createdAt, size: size)
+            DocumentPickerView { file in
+                addPdf(file, openAfterAdd: false)
             }
         }
+        // onChange ではなく task(id:) を使う。共有シートからの起動では
+        // TopScreen の表示より先に onOpenURL が発火するため、初回表示時にも処理する必要がある
+        .task(id: openedPdfUrl) {
+            importOpenedPdfIfActive()
+        }
+        // onOpenURL はアプリがアクティブになる前に発火するため、
+        // アクティブになった時点でも取り込みを試みる
+        .onChange(of: scenePhase) { _, _ in
+            importOpenedPdfIfActive()
+        }
+    }
+
+    /// 他アプリから渡された PDF を取り込む（アクティブでなければ何もしない）
+    ///
+    /// アクティブになる前に NavigationStack の path を操作すると、UIKit 側のスタックと
+    /// 食い違って新しい Viewer が古い Viewer の下に入ってしまう
+    private func importOpenedPdfIfActive() {
+        guard scenePhase == .active, let url = openedPdfUrl else { return }
+        openedPdfUrl = nil
+        // 取り込みを始める前に一覧まで戻す。Android の popBackStack("top") と
+        // 同じ順序（戻す → 追加 → 遷移）にそろえる
+        path.removeAll()
+        guard let file = preparePdfForImport(from: url) else { return }
+        // 他アプリから開かれた PDF は、追加後そのまま Viewer を表示する
+        addPdf(file, openAfterAdd: true)
+    }
+
+    private func addPdf(_ file: PdfImportFile, openAfterAdd: Bool) {
+        pdfAddBridge.add(
+            sourceUrl: file.sourceUrl,
+            name: file.name,
+            createdAt: file.createdAt,
+            size: file.size,
+            openAfterAdd: openAfterAdd
+        )
     }
 }

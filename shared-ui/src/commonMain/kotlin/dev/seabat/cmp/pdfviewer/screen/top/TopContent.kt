@@ -111,7 +111,9 @@ private fun TopContent(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(pdfList, key = { it.fileName }) { file ->
+                // 万一 fileName が重複しているデータが永続化されていても落ちないよう、
+                // UUID を含む filePath を key に使う
+                items(pdfList, key = { it.filePath.ifEmpty { it.fileName } }) { file ->
                     PdfFileItem(
                         file = file,
                         thumbnail = thumbnails[file.fileName],
