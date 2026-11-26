@@ -1,20 +1,18 @@
 package dev.seabat.cmp.pdfviewer.screen.top
 
 import android.net.Uri
-import android.provider.DocumentsContract
-import android.provider.OpenableColumns
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.seabat.cmp.pdfviewer.theme.AppColors
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.skydoves.navgraph.annotations.NavDestination
 import com.github.skydoves.navgraph.annotations.NavEdge
@@ -23,13 +21,26 @@ import com.github.skydoves.navgraph.annotations.NavPreview
 import dev.seabat.cmp.pdfviewer.navigation.Screen
 import org.koin.compose.viewmodel.koinViewModel
 
+/**
+ * トップページ
+ *
+ * @param incomingPdfUri 他アプリから「開く」「共有」で渡された PDF の Uri 文字列。
+ *   受け取ったら一覧へ追加して Viewer を開く
+ * @param onIncomingPdfConsumed [incomingPdfUri] の処理が済んだことを通知するコールバック。
+ *   同じ Uri が再処理されないよう呼び出し側で保持をクリアする
+ */
 @NavGraphRoot
 @NavDestination(route = Screen.Top::class)
 @NavEdge(to = Screen.Information::class, label = "インフォメーションへ")
 @NavEdge(to = Screen.Viewer::class, label = "ビューアへ")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopScreen(onNavigateToViewer: (String) -> Unit, onNavigateToInformation: () -> Unit) {
+fun TopScreen(
+    onNavigateToViewer: (String) -> Unit,
+    onNavigateToInformation: () -> Unit,
+    incomingPdfUri: String? = null,
+    onIncomingPdfConsumed: () -> Unit = {}
+) {
     val viewModel: TopViewModel = koinViewModel()
     val context = LocalContext.current
 
@@ -37,27 +48,35 @@ fun TopScreen(onNavigateToViewer: (String) -> Unit, onNavigateToInformation: () 
         contract = ActivityResultContracts.OpenDocument()
     ) { uri: Uri? ->
         uri ?: return@rememberLauncherForActivityResult
-        var name = "unknown.pdf"
-        var sizeBytes = 0L
-        var lastModifiedMillis = 0L
-        context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val nameIdx = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                val sizeIdx = cursor.getColumnIndex(OpenableColumns.SIZE)
-                val modifiedIdx = cursor.getColumnIndex(DocumentsContract.Document.COLUMN_LAST_MODIFIED)
-                if (nameIdx >= 0) name = cursor.getString(nameIdx) ?: name
-                if (sizeIdx >= 0) sizeBytes = cursor.getLong(sizeIdx)
-                if (modifiedIdx >= 0) lastModifiedMillis = cursor.getLong(modifiedIdx)
-            }
-        }
-        val size = formatFileSize(sizeBytes)
-        val dateSource = if (lastModifiedMillis > 0) Date(lastModifiedMillis) else Date()
-        // 固定フォーマット向けに Locale.US と GregorianCalendar を指定することで、
-        // 日本語ロケールでも和暦にならず西暦で出力される
-        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
-        formatter.calendar = java.util.GregorianCalendar()
-        val createdAt = formatter.format(dateSource)
-        viewModel.addPdfFile(sourceUri = uri.toString(), name = name, createdAt = createdAt, size = size)
+        val metadata = readPdfUriMetadata(context, uri)
+        viewModel.addPdfFile(
+            sourceUri = uri.toString(),
+            name = metadata.name,
+            createdAt = metadata.createdAt,
+            size = metadata.size
+        )
+    }
+
+    // 他アプリから渡された PDF を一覧へ追加する
+    LaunchedEffect(incomingPdfUri) {
+        val uriString = incomingPdfUri ?: return@LaunchedEffect
+        val metadata = readPdfUriMetadata(context, Uri.parse(uriString))
+        viewModel.addPdfFile(
+            sourceUri = uriString,
+            name = metadata.name,
+            createdAt = metadata.createdAt,
+            size = metadata.size,
+            openAfterAdd = true
+        )
+        onIncomingPdfConsumed()
+    }
+
+    // 他アプリから渡された PDF の保存完了後に Viewer へ遷移する
+    val pendingViewerFileName by viewModel.pendingViewerFileName.collectAsState()
+    LaunchedEffect(pendingViewerFileName) {
+        val fileName = pendingViewerFileName ?: return@LaunchedEffect
+        viewModel.consumePendingViewerFileName()
+        onNavigateToViewer(fileName)
     }
 
     Scaffold(
@@ -82,10 +101,4 @@ fun TopScreen(onNavigateToViewer: (String) -> Unit, onNavigateToInformation: () 
 @Composable
 fun TopScreenPreview() {
     TopScreen(onNavigateToViewer = {}, onNavigateToInformation = {})
-}
-
-private fun formatFileSize(bytes: Long): String = when {
-    bytes >= 1_048_576 -> "%.1f MB".format(bytes / 1_048_576.0)
-    bytes >= 1_024 -> "%.1f KB".format(bytes / 1_024.0)
-    else -> "$bytes B"
 }

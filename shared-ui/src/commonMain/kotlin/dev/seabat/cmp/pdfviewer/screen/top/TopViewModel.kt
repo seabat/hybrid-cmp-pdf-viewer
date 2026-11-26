@@ -56,6 +56,13 @@ class TopViewModel(
     private val _thumbnails = MutableStateFlow<Map<String, ImageBitmap>>(emptyMap())
     val thumbnails: StateFlow<Map<String, ImageBitmap>> = _thumbnails.asStateFlow()
 
+    /**
+     * 他アプリから受け取った PDF の追加完了後に開くべきファイル名
+     * Viewer へ遷移したら [consumePendingViewerFileName] でクリアする
+     */
+    private val _pendingViewerFileName = MutableStateFlow<String?>(null)
+    val pendingViewerFileName: StateFlow<String?> = _pendingViewerFileName.asStateFlow()
+
     init {
         viewModelScope.launch {
             try {
@@ -68,12 +75,26 @@ class TopViewModel(
         }
     }
 
-    fun addPdfFile(sourceUri: String, name: String, createdAt: String, size: String) {
+    /**
+     * PDF を内部ストレージへコピーして一覧に追加する
+     *
+     * @param openAfterAdd 追加後に Viewer を開く場合は true（他アプリからの「開く」「共有」で使う）。
+     *   Viewer は永続化済みの一覧からファイルを検索するため、保存が完了してから
+     *   [pendingViewerFileName] へ流す
+     */
+    fun addPdfFile(
+        sourceUri: String,
+        name: String,
+        createdAt: String,
+        size: String,
+        openAfterAdd: Boolean = false
+    ) {
         viewModelScope.launch {
             try {
-                val filePath = copyPdfFileUseCase(sourceUri = sourceUri, destFileName = name)
+                val uniqueName = toUniqueFileName(name)
+                val filePath = copyPdfFileUseCase(sourceUri = sourceUri, destFileName = uniqueName)
                 val newList = _rawPdfList.value + PdfFile(
-                    fileName = name,
+                    fileName = uniqueName,
                     createdAt = createdAt,
                     size = size,
                     filePath = filePath
@@ -81,10 +102,36 @@ class TopViewModel(
                 _rawPdfList.value = newList
                 applySort()
                 savePdfListUseCase(newList)
+                if (openAfterAdd) {
+                    _pendingViewerFileName.value = uniqueName
+                }
                 cacheMissingThumbnails(_pdfList.value)
             } catch (_: Exception) {
             }
         }
+    }
+
+    /** Viewer への遷移が済んだことを通知する */
+    fun consumePendingViewerFileName() {
+        _pendingViewerFileName.value = null
+    }
+
+    /**
+     * 一覧内で重複しないファイル名を返す（重複する場合は "name (1).pdf" のように連番を付ける）
+     *
+     * fileName は一覧の key・サムネイルのキャッシュキー・Viewer の検索キーを兼ねているため、
+     * 同じ PDF を繰り返し追加しても一意になるようにする
+     */
+    private fun toUniqueFileName(name: String): String {
+        val existingNames = _rawPdfList.value.map { it.fileName }.toSet()
+        if (name !in existingNames) return name
+
+        val baseName = name.substringBeforeLast('.', name)
+        val extension = name.substringAfterLast('.', "")
+        val suffix = if (extension.isEmpty()) "" else ".$extension"
+        var index = 1
+        while ("$baseName ($index)$suffix" in existingNames) index++
+        return "$baseName ($index)$suffix"
     }
 
     fun deletePdfFile(file: PdfFile) {
