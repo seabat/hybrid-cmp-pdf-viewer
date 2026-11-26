@@ -4,6 +4,9 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<!-- ホーム画面や共有シートに表示されるアプリ名（PRODUCT_NAME より優先される） -->
+	<key>CFBundleDisplayName</key>
+	<string>シンプルPDFビューア</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
